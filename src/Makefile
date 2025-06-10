@@ -129,6 +129,54 @@ main/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
+hotspot/classfile/ClassFileParser.o: hotspot/classfile/ClassFileParser.cpp.o
+.PHONY : hotspot/classfile/ClassFileParser.o
+
+# target to build an object file
+hotspot/classfile/ClassFileParser.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/classfile/ClassFileParser.cpp.o
+.PHONY : hotspot/classfile/ClassFileParser.cpp.o
+
+hotspot/classfile/ClassFileParser.i: hotspot/classfile/ClassFileParser.cpp.i
+.PHONY : hotspot/classfile/ClassFileParser.i
+
+# target to preprocess a source file
+hotspot/classfile/ClassFileParser.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/classfile/ClassFileParser.cpp.i
+.PHONY : hotspot/classfile/ClassFileParser.cpp.i
+
+hotspot/classfile/ClassFileParser.s: hotspot/classfile/ClassFileParser.cpp.s
+.PHONY : hotspot/classfile/ClassFileParser.s
+
+# target to generate assembly for a file
+hotspot/classfile/ClassFileParser.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/classfile/ClassFileParser.cpp.s
+.PHONY : hotspot/classfile/ClassFileParser.cpp.s
+
+hotspot/classfile/ClassFileStream.o: hotspot/classfile/ClassFileStream.cpp.o
+.PHONY : hotspot/classfile/ClassFileStream.o
+
+# target to build an object file
+hotspot/classfile/ClassFileStream.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/classfile/ClassFileStream.cpp.o
+.PHONY : hotspot/classfile/ClassFileStream.cpp.o
+
+hotspot/classfile/ClassFileStream.i: hotspot/classfile/ClassFileStream.cpp.i
+.PHONY : hotspot/classfile/ClassFileStream.i
+
+# target to preprocess a source file
+hotspot/classfile/ClassFileStream.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/classfile/ClassFileStream.cpp.i
+.PHONY : hotspot/classfile/ClassFileStream.cpp.i
+
+hotspot/classfile/ClassFileStream.s: hotspot/classfile/ClassFileStream.cpp.s
+.PHONY : hotspot/classfile/ClassFileStream.s
+
+# target to generate assembly for a file
+hotspot/classfile/ClassFileStream.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/classfile/ClassFileStream.cpp.s
+.PHONY : hotspot/classfile/ClassFileStream.cpp.s
+
 hotspot/classfile/ClassLoader.o: hotspot/classfile/ClassLoader.cpp.o
 .PHONY : hotspot/classfile/ClassLoader.o
 
@@ -152,6 +200,54 @@ hotspot/classfile/ClassLoader.s: hotspot/classfile/ClassLoader.cpp.s
 hotspot/classfile/ClassLoader.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/classfile/ClassLoader.cpp.s
 .PHONY : hotspot/classfile/ClassLoader.cpp.s
+
+hotspot/oops/ConstantPool.o: hotspot/oops/ConstantPool.cpp.o
+.PHONY : hotspot/oops/ConstantPool.o
+
+# target to build an object file
+hotspot/oops/ConstantPool.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/ConstantPool.cpp.o
+.PHONY : hotspot/oops/ConstantPool.cpp.o
+
+hotspot/oops/ConstantPool.i: hotspot/oops/ConstantPool.cpp.i
+.PHONY : hotspot/oops/ConstantPool.i
+
+# target to preprocess a source file
+hotspot/oops/ConstantPool.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/ConstantPool.cpp.i
+.PHONY : hotspot/oops/ConstantPool.cpp.i
+
+hotspot/oops/ConstantPool.s: hotspot/oops/ConstantPool.cpp.s
+.PHONY : hotspot/oops/ConstantPool.s
+
+# target to generate assembly for a file
+hotspot/oops/ConstantPool.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/ConstantPool.cpp.s
+.PHONY : hotspot/oops/ConstantPool.cpp.s
+
+hotspot/oops/InstanceKClass.o: hotspot/oops/InstanceKClass.cpp.o
+.PHONY : hotspot/oops/InstanceKClass.o
+
+# target to build an object file
+hotspot/oops/InstanceKClass.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/InstanceKClass.cpp.o
+.PHONY : hotspot/oops/InstanceKClass.cpp.o
+
+hotspot/oops/InstanceKClass.i: hotspot/oops/InstanceKClass.cpp.i
+.PHONY : hotspot/oops/InstanceKClass.i
+
+# target to preprocess a source file
+hotspot/oops/InstanceKClass.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/InstanceKClass.cpp.i
+.PHONY : hotspot/oops/InstanceKClass.cpp.i
+
+hotspot/oops/InstanceKClass.s: hotspot/oops/InstanceKClass.cpp.s
+.PHONY : hotspot/oops/InstanceKClass.s
+
+# target to generate assembly for a file
+hotspot/oops/InstanceKClass.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/InstanceKClass.cpp.s
+.PHONY : hotspot/oops/InstanceKClass.cpp.s
 
 hotspot/oops/KClass.o: hotspot/oops/KClass.cpp.o
 .PHONY : hotspot/oops/KClass.o
@@ -258,9 +354,21 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... main"
+	@echo "... hotspot/classfile/ClassFileParser.o"
+	@echo "... hotspot/classfile/ClassFileParser.i"
+	@echo "... hotspot/classfile/ClassFileParser.s"
+	@echo "... hotspot/classfile/ClassFileStream.o"
+	@echo "... hotspot/classfile/ClassFileStream.i"
+	@echo "... hotspot/classfile/ClassFileStream.s"
 	@echo "... hotspot/classfile/ClassLoader.o"
 	@echo "... hotspot/classfile/ClassLoader.i"
 	@echo "... hotspot/classfile/ClassLoader.s"
+	@echo "... hotspot/oops/ConstantPool.o"
+	@echo "... hotspot/oops/ConstantPool.i"
+	@echo "... hotspot/oops/ConstantPool.s"
+	@echo "... hotspot/oops/InstanceKClass.o"
+	@echo "... hotspot/oops/InstanceKClass.i"
+	@echo "... hotspot/oops/InstanceKClass.s"
 	@echo "... hotspot/oops/KClass.o"
 	@echo "... hotspot/oops/KClass.i"
 	@echo "... hotspot/oops/KClass.s"
