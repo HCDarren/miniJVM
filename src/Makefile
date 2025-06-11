@@ -225,6 +225,30 @@ hotspot/oops/ConstantPool.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/ConstantPool.cpp.s
 .PHONY : hotspot/oops/ConstantPool.cpp.s
 
+hotspot/oops/FieldInfo.o: hotspot/oops/FieldInfo.cpp.o
+.PHONY : hotspot/oops/FieldInfo.o
+
+# target to build an object file
+hotspot/oops/FieldInfo.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/FieldInfo.cpp.o
+.PHONY : hotspot/oops/FieldInfo.cpp.o
+
+hotspot/oops/FieldInfo.i: hotspot/oops/FieldInfo.cpp.i
+.PHONY : hotspot/oops/FieldInfo.i
+
+# target to preprocess a source file
+hotspot/oops/FieldInfo.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/FieldInfo.cpp.i
+.PHONY : hotspot/oops/FieldInfo.cpp.i
+
+hotspot/oops/FieldInfo.s: hotspot/oops/FieldInfo.cpp.s
+.PHONY : hotspot/oops/FieldInfo.s
+
+# target to generate assembly for a file
+hotspot/oops/FieldInfo.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/FieldInfo.cpp.s
+.PHONY : hotspot/oops/FieldInfo.cpp.s
+
 hotspot/oops/InstanceKClass.o: hotspot/oops/InstanceKClass.cpp.o
 .PHONY : hotspot/oops/InstanceKClass.o
 
@@ -297,6 +321,30 @@ hotspot/oops/Metadata.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/Metadata.cpp.s
 .PHONY : hotspot/oops/Metadata.cpp.s
 
+hotspot/oops/MethodInfo.o: hotspot/oops/MethodInfo.cpp.o
+.PHONY : hotspot/oops/MethodInfo.o
+
+# target to build an object file
+hotspot/oops/MethodInfo.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/MethodInfo.cpp.o
+.PHONY : hotspot/oops/MethodInfo.cpp.o
+
+hotspot/oops/MethodInfo.i: hotspot/oops/MethodInfo.cpp.i
+.PHONY : hotspot/oops/MethodInfo.i
+
+# target to preprocess a source file
+hotspot/oops/MethodInfo.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/MethodInfo.cpp.i
+.PHONY : hotspot/oops/MethodInfo.cpp.i
+
+hotspot/oops/MethodInfo.s: hotspot/oops/MethodInfo.cpp.s
+.PHONY : hotspot/oops/MethodInfo.s
+
+# target to generate assembly for a file
+hotspot/oops/MethodInfo.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/MethodInfo.cpp.s
+.PHONY : hotspot/oops/MethodInfo.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -366,6 +414,9 @@ help:
 	@echo "... hotspot/oops/ConstantPool.o"
 	@echo "... hotspot/oops/ConstantPool.i"
 	@echo "... hotspot/oops/ConstantPool.s"
+	@echo "... hotspot/oops/FieldInfo.o"
+	@echo "... hotspot/oops/FieldInfo.i"
+	@echo "... hotspot/oops/FieldInfo.s"
 	@echo "... hotspot/oops/InstanceKClass.o"
 	@echo "... hotspot/oops/InstanceKClass.i"
 	@echo "... hotspot/oops/InstanceKClass.s"
@@ -375,6 +426,9 @@ help:
 	@echo "... hotspot/oops/Metadata.o"
 	@echo "... hotspot/oops/Metadata.i"
 	@echo "... hotspot/oops/Metadata.s"
+	@echo "... hotspot/oops/MethodInfo.o"
+	@echo "... hotspot/oops/MethodInfo.i"
+	@echo "... hotspot/oops/MethodInfo.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

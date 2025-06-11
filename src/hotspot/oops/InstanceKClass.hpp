@@ -3,6 +3,8 @@
 
 #include "oops/KClass.hpp"
 #include "oops/ConstantPool.hpp"
+#include "oops/FieldInfo.hpp"
+#include "oops/MethodInfo.hpp"
 
 namespace mini_jvm
 {
@@ -10,7 +12,10 @@ namespace mini_jvm
     {
     protected:
         ConstantPool *_constants;
-
+        u2 _field_size;
+        u2 _method_size;
+        FieldInfo* _fields;
+        MethodInfo* _methods;
     public:
         ConstantPool *constants()
         {
@@ -20,6 +25,22 @@ namespace mini_jvm
         void set_constants(ConstantPool *c)
         {
             _constants = c;
+        }
+
+        void set_fields(FieldInfo* fields) {
+            _fields = fields;
+        }
+
+        void set_field_size(const u2 field_size) {
+            _field_size = field_size;
+        }
+
+        void set_methods(MethodInfo* methods) {
+            _methods = methods;
+        }
+
+        void set_method_size(const u2 method_size) {
+            _method_size = method_size;
         }
     };
 } // namespace name

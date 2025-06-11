@@ -5,6 +5,9 @@
 #include "oops/ConstantPool.hpp"
 #include <cassert>
 #include <iostream>
+#include "oops/FieldInfo.hpp"
+#include "oops/MethodInfo.hpp"
+#include "classfile/VmSymbols.hpp"
 
 namespace mini_jvm
 {
@@ -27,7 +30,100 @@ namespace mini_jvm
         assert(cp_size > 1);
         parse_constant_pool(cp_size, stream, kClass);
 
+        u2 flags = stream->get_u2();
+        u2 this_class_index = stream->get_u2();
+        u2 super_class_index = stream->get_u2();
+        u2 interfaces_length = stream->get_u2();
+        // 接口解析不写
+        parse_interfaces(stream, kClass);
+
+        parse_fileds(stream, kClass);
+
+        parse_methods(stream, kClass);
         return kClass;
+    }
+
+    void ClassFileParser::parse_interfaces(ClassFileStream* stream, InstanceKClass* kClass) {
+        
+    }
+
+    void ClassFileParser::parse_fileds(ClassFileStream* stream, InstanceKClass* kClass) {
+        const u2 field_size = stream->get_u2();
+        FieldInfo* fields = new FieldInfo[field_size];
+        kClass->set_fields(fields);
+        kClass->set_field_size(field_size);
+        for (size_t i = 0; i < field_size; i++)
+        {
+            const u2 flags = stream->get_u2();
+            const u2 name_index = stream->get_u2();
+            const u2 signature_index = stream->get_u2();
+            const u2 attribute_count = stream->get_u2();
+            // 解析字段属性，不写
+            fields[i].set_flags(flags); 
+            fields[i].set_name_index(name_index); 
+            fields[i].set_signature_index(signature_index); 
+            fields[i].set_attribute_count(attribute_count);
+        }
+    }
+            
+    void ClassFileParser::parse_methods(ClassFileStream* stream, InstanceKClass* kClass) {
+        const u2 method_size = stream->get_u2();
+        MethodInfo* methods = new MethodInfo[method_size];
+        kClass->set_methods(methods);
+        kClass->set_method_size(method_size);
+        for (size_t i = 0; i < method_size; i++)
+        {
+            parse_method(stream, methods+i, kClass->constants());
+        }
+    }
+
+    void ClassFileParser::parse_method(ClassFileStream* stream, MethodInfo* m, ConstantPool* cp) {
+        const u2 flags = stream->get_u2();
+        const u2 name_index = stream->get_u2();
+        const u2 signature_index = stream->get_u2();
+        u2 method_attributes_count = stream->get_u2();
+
+        u2 max_stack;
+        u2 max_locals;
+        u4 code_length;
+        u1* code_start;
+        u2 exception_table_length;
+
+        // 解析代码、异常表等信息，这个需要耐心，比较复杂一点
+        while (method_attributes_count--)
+        {
+            const u2 method_attribute_name_index = stream->get_u2();
+            const u4 method_attribute_length = stream->get_u4();
+            const char* const method_attribute_name = cp->symbol_at(method_attribute_name_index);
+            if (strcmp(method_attribute_name, tag_code) == 0) {
+                max_stack = stream->get_u2();
+                max_locals = stream->get_u2();
+                code_length = stream->get_u4();
+                code_start = stream->current();
+                stream->skip_u1(code_length);
+                exception_table_length = stream->get_u2();
+                u2 code_attributes_count = stream->get_u2();
+                while (code_attributes_count--)
+                {
+                    const u2 code_attribute_name_index = stream->get_u2();
+                    const u4 code_attribute_length = stream->get_u4();
+                    const char* const code_attribute_name = cp->symbol_at(code_attribute_name_index);
+                    // code 属性都不做，直接往后跳
+                    stream->skip_u1(code_attribute_length);
+                }
+            } else if(strcmp(method_attribute_name, tag_exceptions) == 0) {
+                // 后面异常再写，看有没有时间了
+            }
+        }
+
+        m->set_flags(flags);
+        m->set_name_index(name_index);
+        m->set_signature_index(signature_index);
+
+        m->set_max_stack(max_stack);
+        m->set_max_locals(max_locals);
+        m->set_code_length(code_length);
+        m->set_code(code_start);
     }
 
     // 解析常量池数据
