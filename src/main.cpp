@@ -1,7 +1,7 @@
 #include <iostream>
-#include "unit/class_loader_test.hpp"
+#include "unit/minjvm_test.hpp"
 
 int main(void) {
-    test_class_loader();
+    test();
     return 0;
 }

@@ -1,6 +1,6 @@
 #ifndef DAREEN_MINIJVM_UNIT_CLASSLOADER_TEST
 #define DAREEN_MINIJVM_UNIT_CLASSLOADER_TEST
 
-void test_class_loader();
+void test();
 
 #endif

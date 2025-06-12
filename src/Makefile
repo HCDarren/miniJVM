@@ -201,6 +201,30 @@ hotspot/classfile/ClassLoader.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/classfile/ClassLoader.cpp.s
 .PHONY : hotspot/classfile/ClassLoader.cpp.s
 
+hotspot/interpreter/BytecodeInterpreter.o: hotspot/interpreter/BytecodeInterpreter.cpp.o
+.PHONY : hotspot/interpreter/BytecodeInterpreter.o
+
+# target to build an object file
+hotspot/interpreter/BytecodeInterpreter.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/interpreter/BytecodeInterpreter.cpp.o
+.PHONY : hotspot/interpreter/BytecodeInterpreter.cpp.o
+
+hotspot/interpreter/BytecodeInterpreter.i: hotspot/interpreter/BytecodeInterpreter.cpp.i
+.PHONY : hotspot/interpreter/BytecodeInterpreter.i
+
+# target to preprocess a source file
+hotspot/interpreter/BytecodeInterpreter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/interpreter/BytecodeInterpreter.cpp.i
+.PHONY : hotspot/interpreter/BytecodeInterpreter.cpp.i
+
+hotspot/interpreter/BytecodeInterpreter.s: hotspot/interpreter/BytecodeInterpreter.cpp.s
+.PHONY : hotspot/interpreter/BytecodeInterpreter.s
+
+# target to generate assembly for a file
+hotspot/interpreter/BytecodeInterpreter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/interpreter/BytecodeInterpreter.cpp.s
+.PHONY : hotspot/interpreter/BytecodeInterpreter.cpp.s
+
 hotspot/oops/ConstantPool.o: hotspot/oops/ConstantPool.cpp.o
 .PHONY : hotspot/oops/ConstantPool.o
 
@@ -345,6 +369,54 @@ hotspot/oops/MethodInfo.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/MethodInfo.cpp.s
 .PHONY : hotspot/oops/MethodInfo.cpp.s
 
+hotspot/runtime/JavaThread.o: hotspot/runtime/JavaThread.cpp.o
+.PHONY : hotspot/runtime/JavaThread.o
+
+# target to build an object file
+hotspot/runtime/JavaThread.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/JavaThread.cpp.o
+.PHONY : hotspot/runtime/JavaThread.cpp.o
+
+hotspot/runtime/JavaThread.i: hotspot/runtime/JavaThread.cpp.i
+.PHONY : hotspot/runtime/JavaThread.i
+
+# target to preprocess a source file
+hotspot/runtime/JavaThread.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/JavaThread.cpp.i
+.PHONY : hotspot/runtime/JavaThread.cpp.i
+
+hotspot/runtime/JavaThread.s: hotspot/runtime/JavaThread.cpp.s
+.PHONY : hotspot/runtime/JavaThread.s
+
+# target to generate assembly for a file
+hotspot/runtime/JavaThread.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/JavaThread.cpp.s
+.PHONY : hotspot/runtime/JavaThread.cpp.s
+
+hotspot/runtime/Thread.o: hotspot/runtime/Thread.cpp.o
+.PHONY : hotspot/runtime/Thread.o
+
+# target to build an object file
+hotspot/runtime/Thread.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/Thread.cpp.o
+.PHONY : hotspot/runtime/Thread.cpp.o
+
+hotspot/runtime/Thread.i: hotspot/runtime/Thread.cpp.i
+.PHONY : hotspot/runtime/Thread.i
+
+# target to preprocess a source file
+hotspot/runtime/Thread.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/Thread.cpp.i
+.PHONY : hotspot/runtime/Thread.cpp.i
+
+hotspot/runtime/Thread.s: hotspot/runtime/Thread.cpp.s
+.PHONY : hotspot/runtime/Thread.s
+
+# target to generate assembly for a file
+hotspot/runtime/Thread.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/Thread.cpp.s
+.PHONY : hotspot/runtime/Thread.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -369,29 +441,29 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-unit/class_loader_test.o: unit/class_loader_test.cpp.o
-.PHONY : unit/class_loader_test.o
+unit/minjvm_test.o: unit/minjvm_test.cpp.o
+.PHONY : unit/minjvm_test.o
 
 # target to build an object file
-unit/class_loader_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/unit/class_loader_test.cpp.o
-.PHONY : unit/class_loader_test.cpp.o
+unit/minjvm_test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/unit/minjvm_test.cpp.o
+.PHONY : unit/minjvm_test.cpp.o
 
-unit/class_loader_test.i: unit/class_loader_test.cpp.i
-.PHONY : unit/class_loader_test.i
+unit/minjvm_test.i: unit/minjvm_test.cpp.i
+.PHONY : unit/minjvm_test.i
 
 # target to preprocess a source file
-unit/class_loader_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/unit/class_loader_test.cpp.i
-.PHONY : unit/class_loader_test.cpp.i
+unit/minjvm_test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/unit/minjvm_test.cpp.i
+.PHONY : unit/minjvm_test.cpp.i
 
-unit/class_loader_test.s: unit/class_loader_test.cpp.s
-.PHONY : unit/class_loader_test.s
+unit/minjvm_test.s: unit/minjvm_test.cpp.s
+.PHONY : unit/minjvm_test.s
 
 # target to generate assembly for a file
-unit/class_loader_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/unit/class_loader_test.cpp.s
-.PHONY : unit/class_loader_test.cpp.s
+unit/minjvm_test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/unit/minjvm_test.cpp.s
+.PHONY : unit/minjvm_test.cpp.s
 
 # Help Target
 help:
@@ -411,6 +483,9 @@ help:
 	@echo "... hotspot/classfile/ClassLoader.o"
 	@echo "... hotspot/classfile/ClassLoader.i"
 	@echo "... hotspot/classfile/ClassLoader.s"
+	@echo "... hotspot/interpreter/BytecodeInterpreter.o"
+	@echo "... hotspot/interpreter/BytecodeInterpreter.i"
+	@echo "... hotspot/interpreter/BytecodeInterpreter.s"
 	@echo "... hotspot/oops/ConstantPool.o"
 	@echo "... hotspot/oops/ConstantPool.i"
 	@echo "... hotspot/oops/ConstantPool.s"
@@ -429,12 +504,18 @@ help:
 	@echo "... hotspot/oops/MethodInfo.o"
 	@echo "... hotspot/oops/MethodInfo.i"
 	@echo "... hotspot/oops/MethodInfo.s"
+	@echo "... hotspot/runtime/JavaThread.o"
+	@echo "... hotspot/runtime/JavaThread.i"
+	@echo "... hotspot/runtime/JavaThread.s"
+	@echo "... hotspot/runtime/Thread.o"
+	@echo "... hotspot/runtime/Thread.i"
+	@echo "... hotspot/runtime/Thread.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... unit/class_loader_test.o"
-	@echo "... unit/class_loader_test.i"
-	@echo "... unit/class_loader_test.s"
+	@echo "... unit/minjvm_test.o"
+	@echo "... unit/minjvm_test.i"
+	@echo "... unit/minjvm_test.s"
 .PHONY : help
 
 

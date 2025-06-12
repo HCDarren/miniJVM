@@ -1,5 +1,6 @@
-#include "unit/class_loader_test.hpp"
+#include "unit/minjvm_test.hpp"
 #include "oops/InstanceKClass.hpp"
+#include "interpreter/BytecodeInterpreter.hpp"
 #include "classfile/ClassLoader.hpp"
 #include "oops/ConstantPool.hpp"
 #include "classfile/constants.hpp"
@@ -7,15 +8,9 @@
 #include <cassert>
 #include <iomanip>
 #include <sstream>
+#include <string>
 
 using namespace mini_jvm;
-
-// 格式化字符串，不足三位前面补空格
-std::string formatWithSpace(const std::string& str) {
-    std::stringstream oss;
-    oss  << str;  // 输出到字符串流
-    return oss.str();
-}
 
 void test_print_constant_pool(InstanceKClass* kClass) {
     ConstantPool* cp =  kClass->constants();
@@ -115,9 +110,16 @@ void test_print_constant_pool(InstanceKClass* kClass) {
     }
 }
 
-void test_class_loader() {
-    InstanceKClass* kClass = mini_jvm::ClassLoader::load_class("/Users/darrenzeng/Desktop/Darren/Study/miniJVM/src/MiniJVM.class");
+static void test_method_exec(InstanceKClass* kClass) {
+    MethodInfo* methods = kClass->methods();
+    u2 method_size = kClass->method_size();
+    MethodInfo* main_method = kClass->findMethod("main", "([Ljava/lang/String;)V");
+    BytecodeInterpreter interpreter;
+    interpreter.invoke(main_method, kClass);
+}
+
+void test() {
+    InstanceKClass* kClass = mini_jvm::ClassLoader::load_class("MiniJVM");
     test_print_constant_pool(kClass);
-    std::cout << " " << std::endl;
-    std::cout << " " << std::endl;
+    test_method_exec(kClass);
 }

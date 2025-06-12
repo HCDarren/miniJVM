@@ -46,7 +46,15 @@ namespace mini_jvm
             memcpy(_code_start, code_start, _code_length);
         }
 
-        u2 flags() {
+        u1* code() const{
+            return _code_start;
+        }
+
+        u4 code_length() const{
+            return _code_length;
+        }
+
+        u2 flags() const{
             return _flags;
         }
 

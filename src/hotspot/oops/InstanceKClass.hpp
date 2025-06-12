@@ -17,7 +17,7 @@ namespace mini_jvm
         FieldInfo* _fields;
         MethodInfo* _methods;
     public:
-        ConstantPool *constants()
+        ConstantPool *constants() const
         {
             return _constants;
         }
@@ -42,6 +42,16 @@ namespace mini_jvm
         void set_method_size(const u2 method_size) {
             _method_size = method_size;
         }
+
+        u2 method_size() {
+            return _method_size;
+        }
+
+        MethodInfo* methods() {
+            return _methods;
+        }
+        
+        MethodInfo* findMethod(const char *method_name, const char *method_signature);
     };
 } // namespace name
 
