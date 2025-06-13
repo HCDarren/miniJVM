@@ -225,6 +225,54 @@ hotspot/interpreter/BytecodeInterpreter.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/interpreter/BytecodeInterpreter.cpp.s
 .PHONY : hotspot/interpreter/BytecodeInterpreter.cpp.s
 
+hotspot/jni/JNIEnv.o: hotspot/jni/JNIEnv.cpp.o
+.PHONY : hotspot/jni/JNIEnv.o
+
+# target to build an object file
+hotspot/jni/JNIEnv.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/JNIEnv.cpp.o
+.PHONY : hotspot/jni/JNIEnv.cpp.o
+
+hotspot/jni/JNIEnv.i: hotspot/jni/JNIEnv.cpp.i
+.PHONY : hotspot/jni/JNIEnv.i
+
+# target to preprocess a source file
+hotspot/jni/JNIEnv.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/JNIEnv.cpp.i
+.PHONY : hotspot/jni/JNIEnv.cpp.i
+
+hotspot/jni/JNIEnv.s: hotspot/jni/JNIEnv.cpp.s
+.PHONY : hotspot/jni/JNIEnv.s
+
+# target to generate assembly for a file
+hotspot/jni/JNIEnv.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/JNIEnv.cpp.s
+.PHONY : hotspot/jni/JNIEnv.cpp.s
+
+hotspot/jni/Java_io_PrintStream.o: hotspot/jni/Java_io_PrintStream.cpp.o
+.PHONY : hotspot/jni/Java_io_PrintStream.o
+
+# target to build an object file
+hotspot/jni/Java_io_PrintStream.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/Java_io_PrintStream.cpp.o
+.PHONY : hotspot/jni/Java_io_PrintStream.cpp.o
+
+hotspot/jni/Java_io_PrintStream.i: hotspot/jni/Java_io_PrintStream.cpp.i
+.PHONY : hotspot/jni/Java_io_PrintStream.i
+
+# target to preprocess a source file
+hotspot/jni/Java_io_PrintStream.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/Java_io_PrintStream.cpp.i
+.PHONY : hotspot/jni/Java_io_PrintStream.cpp.i
+
+hotspot/jni/Java_io_PrintStream.s: hotspot/jni/Java_io_PrintStream.cpp.s
+.PHONY : hotspot/jni/Java_io_PrintStream.s
+
+# target to generate assembly for a file
+hotspot/jni/Java_io_PrintStream.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/Java_io_PrintStream.cpp.s
+.PHONY : hotspot/jni/Java_io_PrintStream.cpp.s
+
 hotspot/oops/ConstantPool.o: hotspot/oops/ConstantPool.cpp.o
 .PHONY : hotspot/oops/ConstantPool.o
 
@@ -486,6 +534,12 @@ help:
 	@echo "... hotspot/interpreter/BytecodeInterpreter.o"
 	@echo "... hotspot/interpreter/BytecodeInterpreter.i"
 	@echo "... hotspot/interpreter/BytecodeInterpreter.s"
+	@echo "... hotspot/jni/JNIEnv.o"
+	@echo "... hotspot/jni/JNIEnv.i"
+	@echo "... hotspot/jni/JNIEnv.s"
+	@echo "... hotspot/jni/Java_io_PrintStream.o"
+	@echo "... hotspot/jni/Java_io_PrintStream.i"
+	@echo "... hotspot/jni/Java_io_PrintStream.s"
 	@echo "... hotspot/oops/ConstantPool.o"
 	@echo "... hotspot/oops/ConstantPool.i"
 	@echo "... hotspot/oops/ConstantPool.s"

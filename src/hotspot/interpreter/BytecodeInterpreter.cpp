@@ -7,6 +7,7 @@
 #include "utilities/bytes_arm.hpp"
 #include <iostream>
 #include <cassert>
+#include "jni/Java_io_PrintStream.h"
 
 #define ldc 18
 #define return 177
@@ -15,6 +16,10 @@
 
 namespace mini_jvm
 {
+    BytecodeInterpreter::BytecodeInterpreter() {
+        _jniEnv = new JNIEnv();
+        Java_io_PrintStream::register_natives(_jniEnv);
+    }
 
     void BytecodeInterpreter::invoke(const MethodInfo *method, const InstanceKClass* kClass) {
         if (method->flags() & ACC_NATIVE) {
@@ -71,27 +76,31 @@ namespace mini_jvm
     }
 
     void BytecodeInterpreter::invokeNativeMethod(const MethodInfo *method, const InstanceKClass* kClass) {
-        // 执行 jni 方法打印字符串，需要搞 jni 了
+        address native_function = method->native_function();
+        // native 方法有了，怎么执行呢？尼玛，找 jdk 源码看看
+        // 看样子只能用汇编调用的那一套来搞了，或者自己写一套规则来搞，还是突破一下用汇编吧
+        __asm__ volatile (
+            "ldr x0, %[func_ptr]\n"
+            "blr x0\n"
+            : 
+            : [func_ptr] "m"(native_function)
+        );
+        std::cout << "return" << std::endl;
     }
     
     // 这里后面的代码要搬走
     void BytecodeInterpreter::invokevirtualMethod(const u1 class_index, const u1 name_and_type_index, const InstanceKClass* kClass) {
         int class_name_index = kClass->constants()->kclass_index_at(class_index);
         const char* class_name = kClass->constants()->symbol_at(class_name_index);
-        // 这里要用 appClassLoader 去加载，还有双亲委派，jni 这些，也后面再看吧
-        ClassLoader cl;
-        InstanceKClass* newClass = cl.load_class(class_name);
+        // TODO->这里要用 appClassLoader 去加载，还有双亲委派，jni 这些，也后面再看吧
+        InstanceKClass* newClass = ClassLoader::load_class(class_name);
         u8 name_and_type = kClass->constants()->name_and_type_at(name_and_type_index);
         int target_name_index = (name_and_type & 0xFF);
         int target_signature_index = (name_and_type >> 16);
         const char *target_method_name_str = kClass->constants()->symbol_at(target_name_index);
         const char *target_signature_name_str = kClass->constants()->symbol_at(target_signature_index);
         MethodInfo * method = newClass->findMethod(target_method_name_str, target_signature_name_str);
-        invoke(method, kClass);
-    }
-
-    BytecodeInterpreter::BytecodeInterpreter()
-    {
+        invoke(method, newClass);
     }
 
     BytecodeInterpreter::~BytecodeInterpreter()

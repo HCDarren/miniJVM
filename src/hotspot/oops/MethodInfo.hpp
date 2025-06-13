@@ -46,6 +46,14 @@ namespace mini_jvm
             memcpy(_code_start, code_start, _code_length);
         }
 
+        void set_native_function (address native_function) {
+            _native_function = native_function;
+        }
+
+        address native_function () const{
+            return _native_function;
+        }
+
         u1* code() const{
             return _code_start;
         }
@@ -58,11 +66,11 @@ namespace mini_jvm
             return _flags;
         }
 
-        u2 name_index() {
+        u2 name_index() const{
             return _name_index;
         }
 
-        u2 signature_index() {
+        u2 signature_index() const{
             return _signature_index;
         }
 
@@ -78,6 +86,7 @@ namespace mini_jvm
         u2 _max_locals;
         u4 _code_length;
         u1* _code_start;
+        address _native_function;
     };
 } // namespace name
 

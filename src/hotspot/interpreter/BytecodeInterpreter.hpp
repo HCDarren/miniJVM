@@ -3,11 +3,13 @@
 
 #include "oops/MethodInfo.hpp"
 #include "utilities/GlobalDefinitions.hpp"
+#include <map>
 
 namespace mini_jvm
 {
     class MethodInfo;
     class InstanceKClass;
+    class JNIEnv;
 
     class BytecodeInterpreter
     {
@@ -19,6 +21,9 @@ namespace mini_jvm
     public:
         BytecodeInterpreter();
         ~BytecodeInterpreter();
+    private:
+        std::map<std::string, int> _native_methods;
+        JNIEnv* _jniEnv;
     };    
 } // namespace mini_jvm
 

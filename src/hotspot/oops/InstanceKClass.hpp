@@ -16,6 +16,7 @@ namespace mini_jvm
         u2 _method_size;
         FieldInfo* _fields;
         MethodInfo* _methods;
+        std::string _class_name;
     public:
         ConstantPool *constants() const
         {
@@ -41,6 +42,14 @@ namespace mini_jvm
 
         void set_method_size(const u2 method_size) {
             _method_size = method_size;
+        }
+
+        void set_class_name(std::string class_name) {
+            _class_name = class_name;
+        }
+
+        std::string class_name() const {
+            return _class_name;
         }
 
         u2 method_size() {

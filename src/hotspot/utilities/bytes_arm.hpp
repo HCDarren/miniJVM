@@ -1,3 +1,6 @@
+#ifndef DAREEN_MINIJVM_UTILITIES_BYTES_ARM
+#define DAREEN_MINIJVM_UTILITIES_BYTES_ARM
+
 #include "utilities/GlobalDefinitions.hpp"
 namespace mini_jvm
 {
@@ -32,3 +35,4 @@ public:
 };
 
 } // namespace name
+#endif
