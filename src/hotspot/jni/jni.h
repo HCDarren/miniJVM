@@ -6,16 +6,13 @@
 #include <string>
 #include "utilities/GlobalDefinitions.hpp"
 
-// TODO: 后面有时间要改
-typedef std::string jstring;
-
 class _jobject
 {
 };
 class _jclass : public _jobject
 {
 };
-// class _string : public _jobject {};
+class _string : public _jobject {};
 
 typedef int jint;
 typedef unsigned char jboolean;
@@ -25,8 +22,9 @@ typedef float jfloat;
 typedef double jdouble;
 typedef jint jsize;
 
-typedef _jobject *jobject;
-typedef _jclass *jclass;
+typedef _jobject* jobject;
+typedef _jclass* jclass;
+typedef _jclass* jstring;
 
 namespace mini_jvm
 {

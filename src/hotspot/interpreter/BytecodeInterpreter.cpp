@@ -8,6 +8,7 @@
 #include <iostream>
 #include <cassert>
 #include "jni/Java_io_PrintStream.h"
+#include "cpu/aarch64/AssemblerAarch64.hpp"
 
 #define ldc 18
 #define return 177
@@ -77,15 +78,20 @@ namespace mini_jvm
 
     void BytecodeInterpreter::invokeNativeMethod(const MethodInfo *method, const InstanceKClass* kClass) {
         address native_function = method->native_function();
-        // native 方法有了，怎么执行呢？尼玛，找 jdk 源码看看
+        // native 方法有了，怎么执行呢？尼玛, 找了一圈 jdk 源码也看不懂
         // 看样子只能用汇编调用的那一套来搞了，或者自己写一套规则来搞，还是突破一下用汇编吧
+        tmit_address_param0(_jniEnv);
+        tmit_address_param1(kClass);
+        const char* str = "Hello World!";
+        tmit_address_param2(str);
+        tmit_int_param3(4);
+        tmit_int_param4(5);
         __asm__ volatile (
-            "ldr x0, %[func_ptr]\n"
-            "blr x0\n"
+            "ldr x20, %[func_ptr]\n"
+            "blr x20\n"
             : 
             : [func_ptr] "m"(native_function)
         );
-        std::cout << "return" << std::endl;
     }
     
     // 这里后面的代码要搬走

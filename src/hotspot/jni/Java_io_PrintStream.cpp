@@ -15,8 +15,8 @@ namespace mini_jvm
         env->RegisterNatives((jclass)k_Class, PrintStream_methods, sizeof(PrintStream_methods) / sizeof(JNINativeMethod));
     }
 
-    JNIEXPORT void JNICALL java_io_PrintStream_println_Ljava_lang_String(JNIEnv *env, jobject obj, jstring j_str) {
-        std::cout << j_str << std::endl;
+    JNIEXPORT void JNICALL java_io_PrintStream_println_Ljava_lang_String(JNIEnv *env, jobject obj, jstring j_str, jint a, jint b) {
+        std::cout << (char*)j_str << std::endl;
     }
 
     JNIEXPORT void JNICALL java_io_PrintStream_println_I(JNIEnv *, jobject, jint j_int) {

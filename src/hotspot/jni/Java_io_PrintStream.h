@@ -15,7 +15,7 @@ extern "C" {
  * Method:    println
  * Signature: (Ljava/lang/String;)V
  */
-JNIEXPORT void JNICALL java_io_PrintStream_println_Ljava_lang_String(JNIEnv *, jobject, jstring);
+JNIEXPORT void JNICALL java_io_PrintStream_println_Ljava_lang_String(JNIEnv *, jobject, jstring, jint a, jint b);
 
 JNIEXPORT void JNICALL java_io_PrintStream_println_I(JNIEnv *, jobject, jint);
 
