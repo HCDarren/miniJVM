@@ -2,11 +2,14 @@ public class MiniJVM {
     private String name;
     private int age;
     public static void main(String[] args) {
-        System.out.println("Hello miniJVM");
+        int sum = sum();
+        System.out.println(sum);
     }
 
-    public void test(int a, int b) {
-        int c = 0;
-        int d = 0;
+    public static int sum() {
+        int a = 100;
+        int b = 200;
+        int c = 300;
+        return (a + b) * c;
     }
 }

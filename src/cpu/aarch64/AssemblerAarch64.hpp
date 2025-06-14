@@ -25,6 +25,14 @@ inline void tmit_address_param2(const void* address) {
     );                                                              
 }
 
+inline void tmit_int_param2(const int value) {              
+    __asm__ volatile (                                              
+        "ldr w2, %[val]\n"                                 
+        :                                                           
+        : [val] "m"(value)                                        
+    );                                                              
+}
+
 inline void tmit_int_param3(const int value) {              
     __asm__ volatile (                                              
         "ldr w3, %[val]\n"                                 

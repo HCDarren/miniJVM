@@ -19,7 +19,7 @@ namespace mini_jvm
         std::cout << (char*)j_str << std::endl;
     }
 
-    JNIEXPORT void JNICALL java_io_PrintStream_println_I(JNIEnv *, jobject, jint j_int) {
+    JNIEXPORT void JNICALL java_io_PrintStream_println_I(JNIEnv *env, jobject obj, jint j_int) {
         std::cout << j_int << std::endl;
     }
 } // namespace mini_jvm

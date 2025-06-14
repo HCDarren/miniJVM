@@ -32,9 +32,17 @@ namespace mini_jvm
         void set_max_stack(const u2 max_stack) {
             _max_stack = max_stack;
         }
+
+        u2 max_stack() const{
+            return _max_stack;
+        }
         
         void set_max_locals(const u2 max_locals) {
             _max_locals = max_locals;
+        }
+
+        u2 max_locals() const{
+            return _max_locals;
         }
 
         void set_code_length(const u4 code_length) {

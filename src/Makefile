@@ -417,6 +417,30 @@ hotspot/oops/MethodInfo.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/MethodInfo.cpp.s
 .PHONY : hotspot/oops/MethodInfo.cpp.s
 
+hotspot/runtime/JavaRunStack.o: hotspot/runtime/JavaRunStack.cpp.o
+.PHONY : hotspot/runtime/JavaRunStack.o
+
+# target to build an object file
+hotspot/runtime/JavaRunStack.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/JavaRunStack.cpp.o
+.PHONY : hotspot/runtime/JavaRunStack.cpp.o
+
+hotspot/runtime/JavaRunStack.i: hotspot/runtime/JavaRunStack.cpp.i
+.PHONY : hotspot/runtime/JavaRunStack.i
+
+# target to preprocess a source file
+hotspot/runtime/JavaRunStack.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/JavaRunStack.cpp.i
+.PHONY : hotspot/runtime/JavaRunStack.cpp.i
+
+hotspot/runtime/JavaRunStack.s: hotspot/runtime/JavaRunStack.cpp.s
+.PHONY : hotspot/runtime/JavaRunStack.s
+
+# target to generate assembly for a file
+hotspot/runtime/JavaRunStack.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/JavaRunStack.cpp.s
+.PHONY : hotspot/runtime/JavaRunStack.cpp.s
+
 hotspot/runtime/JavaThread.o: hotspot/runtime/JavaThread.cpp.o
 .PHONY : hotspot/runtime/JavaThread.o
 
@@ -440,6 +464,54 @@ hotspot/runtime/JavaThread.s: hotspot/runtime/JavaThread.cpp.s
 hotspot/runtime/JavaThread.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/JavaThread.cpp.s
 .PHONY : hotspot/runtime/JavaThread.cpp.s
+
+hotspot/runtime/StackFrame.o: hotspot/runtime/StackFrame.cpp.o
+.PHONY : hotspot/runtime/StackFrame.o
+
+# target to build an object file
+hotspot/runtime/StackFrame.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/StackFrame.cpp.o
+.PHONY : hotspot/runtime/StackFrame.cpp.o
+
+hotspot/runtime/StackFrame.i: hotspot/runtime/StackFrame.cpp.i
+.PHONY : hotspot/runtime/StackFrame.i
+
+# target to preprocess a source file
+hotspot/runtime/StackFrame.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/StackFrame.cpp.i
+.PHONY : hotspot/runtime/StackFrame.cpp.i
+
+hotspot/runtime/StackFrame.s: hotspot/runtime/StackFrame.cpp.s
+.PHONY : hotspot/runtime/StackFrame.s
+
+# target to generate assembly for a file
+hotspot/runtime/StackFrame.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/StackFrame.cpp.s
+.PHONY : hotspot/runtime/StackFrame.cpp.s
+
+hotspot/runtime/StackValue.o: hotspot/runtime/StackValue.cpp.o
+.PHONY : hotspot/runtime/StackValue.o
+
+# target to build an object file
+hotspot/runtime/StackValue.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/StackValue.cpp.o
+.PHONY : hotspot/runtime/StackValue.cpp.o
+
+hotspot/runtime/StackValue.i: hotspot/runtime/StackValue.cpp.i
+.PHONY : hotspot/runtime/StackValue.i
+
+# target to preprocess a source file
+hotspot/runtime/StackValue.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/StackValue.cpp.i
+.PHONY : hotspot/runtime/StackValue.cpp.i
+
+hotspot/runtime/StackValue.s: hotspot/runtime/StackValue.cpp.s
+.PHONY : hotspot/runtime/StackValue.s
+
+# target to generate assembly for a file
+hotspot/runtime/StackValue.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/StackValue.cpp.s
+.PHONY : hotspot/runtime/StackValue.cpp.s
 
 hotspot/runtime/Thread.o: hotspot/runtime/Thread.cpp.o
 .PHONY : hotspot/runtime/Thread.o
@@ -558,9 +630,18 @@ help:
 	@echo "... hotspot/oops/MethodInfo.o"
 	@echo "... hotspot/oops/MethodInfo.i"
 	@echo "... hotspot/oops/MethodInfo.s"
+	@echo "... hotspot/runtime/JavaRunStack.o"
+	@echo "... hotspot/runtime/JavaRunStack.i"
+	@echo "... hotspot/runtime/JavaRunStack.s"
 	@echo "... hotspot/runtime/JavaThread.o"
 	@echo "... hotspot/runtime/JavaThread.i"
 	@echo "... hotspot/runtime/JavaThread.s"
+	@echo "... hotspot/runtime/StackFrame.o"
+	@echo "... hotspot/runtime/StackFrame.i"
+	@echo "... hotspot/runtime/StackFrame.s"
+	@echo "... hotspot/runtime/StackValue.o"
+	@echo "... hotspot/runtime/StackValue.i"
+	@echo "... hotspot/runtime/StackValue.s"
 	@echo "... hotspot/runtime/Thread.o"
 	@echo "... hotspot/runtime/Thread.i"
 	@echo "... hotspot/runtime/Thread.s"

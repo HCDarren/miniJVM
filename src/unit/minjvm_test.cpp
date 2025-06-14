@@ -3,6 +3,7 @@
 #include "interpreter/BytecodeInterpreter.hpp"
 #include "classfile/ClassLoader.hpp"
 #include "oops/ConstantPool.hpp"
+#include "runtime/JavaThread.hpp"
 #include "classfile/constants.hpp"
 #include <iostream>
 #include <cassert>
@@ -114,8 +115,8 @@ static void test_method_exec(InstanceKClass* kClass) {
     MethodInfo* methods = kClass->methods();
     u2 method_size = kClass->method_size();
     MethodInfo* main_method = kClass->findMethod("main", "([Ljava/lang/String;)V");
-    BytecodeInterpreter interpreter;
-    interpreter.invoke(main_method, kClass);
+    JavaThread javaThread;
+    javaThread.runJavaMethod(main_method, kClass);
 }
 
 void test() {
