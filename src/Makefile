@@ -465,6 +465,30 @@ hotspot/runtime/JavaThread.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/JavaThread.cpp.s
 .PHONY : hotspot/runtime/JavaThread.cpp.s
 
+hotspot/runtime/Signature.o: hotspot/runtime/Signature.cpp.o
+.PHONY : hotspot/runtime/Signature.o
+
+# target to build an object file
+hotspot/runtime/Signature.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/Signature.cpp.o
+.PHONY : hotspot/runtime/Signature.cpp.o
+
+hotspot/runtime/Signature.i: hotspot/runtime/Signature.cpp.i
+.PHONY : hotspot/runtime/Signature.i
+
+# target to preprocess a source file
+hotspot/runtime/Signature.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/Signature.cpp.i
+.PHONY : hotspot/runtime/Signature.cpp.i
+
+hotspot/runtime/Signature.s: hotspot/runtime/Signature.cpp.s
+.PHONY : hotspot/runtime/Signature.s
+
+# target to generate assembly for a file
+hotspot/runtime/Signature.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/Signature.cpp.s
+.PHONY : hotspot/runtime/Signature.cpp.s
+
 hotspot/runtime/StackFrame.o: hotspot/runtime/StackFrame.cpp.o
 .PHONY : hotspot/runtime/StackFrame.o
 
@@ -636,6 +660,9 @@ help:
 	@echo "... hotspot/runtime/JavaThread.o"
 	@echo "... hotspot/runtime/JavaThread.i"
 	@echo "... hotspot/runtime/JavaThread.s"
+	@echo "... hotspot/runtime/Signature.o"
+	@echo "... hotspot/runtime/Signature.i"
+	@echo "... hotspot/runtime/Signature.s"
 	@echo "... hotspot/runtime/StackFrame.o"
 	@echo "... hotspot/runtime/StackFrame.i"
 	@echo "... hotspot/runtime/StackFrame.s"

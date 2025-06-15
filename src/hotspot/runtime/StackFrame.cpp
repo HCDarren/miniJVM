@@ -45,17 +45,17 @@ namespace mini_jvm
         _local_slots[location]._integer_value = top_stack_value->_integer_value;
     }
 
-    void StackFrame::pop_int_result() {
-        StackValue stack_top_value = _stack_slots[--_stack_top_location];
-        _sender->push_int_to_stack(stack_top_value._integer_value);
+    StackValue* StackFrame::get_data_by(int location) {
+        return &_local_slots[location];
     }
 
     void StackFrame::print_stack_frame() {
+#if STACK_DEBUG
         std::cout << "-----------------------------------" << std::endl;
         std::cout << "local data:" << std::endl;
         for (size_t i = 0; i < _local_slots_size; i++)
         {
-            std::cout << "i = " <<_local_slots[i]._integer_value << std::endl;
+            std::cout << _local_slots[i]._integer_value << std::endl;
         }
 
         std::cout << "stack data:" << std::endl;
@@ -65,6 +65,7 @@ namespace mini_jvm
         }
         
         std::cout << "===================================" << std::endl;
+#endif
     }
 
     void StackFrame::push_float(float value)

@@ -2,14 +2,13 @@ public class MiniJVM {
     private String name;
     private int age;
     public static void main(String[] args) {
-        int sum = sum();
+        int a = 12;
+        int b = 13;
+        int sum = sum(a, b);
         System.out.println(sum);
     }
 
-    public static int sum() {
-        int a = 100;
-        int b = 200;
-        int c = 300;
-        return (a + b) * c;
+    public static int sum(int number1, int number2) {
+        return number1 + number2;
     }
 }

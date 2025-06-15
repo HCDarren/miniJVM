@@ -12,6 +12,7 @@
 #include "runtime/JavaRunStack.hpp"
 #include "runtime/JavaThread.hpp"
 #include "runtime/StackFrame.hpp"
+#include "runtime/Signature.hpp"
 
 #define op_iconst_2 5
 #define op_iconst_3 6
@@ -21,9 +22,11 @@
 #define op_iload_0 26
 #define op_iload_1 27
 #define op_iload_2 28
+#define op_iload_3 29
 #define op_istore_0 59
 #define op_istore_1 60
 #define op_istore_2 61
+#define op_istore_3 62
 #define op_iadd 96
 #define op_imul 104
 #define op_ireturn 172
@@ -46,6 +49,11 @@ namespace mini_jvm
     {
         StackFrame *frame = new StackFrame(method->max_locals(), method->max_stack());
         java_run_stack->push_frame(frame);
+
+        // 把调用者的参数透传到目标方法的栈里面。栈拷贝
+        // 栈 -> 栈，通过方法签名可以获取到参数
+        const char *signature_str = kClass->constants()->symbol_at(method->signature_index());
+        java_run_stack->push_call_parameters(std::string(signature_str));
 
         if (method->flags() & ACC_NATIVE)
         {
@@ -107,10 +115,17 @@ namespace mini_jvm
                 java_run_stack->top_frame()->store_int(2);
                 break;
             }
+            case op_istore_3:
+            {
+                std::cout << "istore_3" << std::endl;
+                java_run_stack->top_frame()->store_int(3);
+                break;
+            }
             case op_getstatic:
             {
                 std::cout << "getstatic" << std::endl;
                 const u2 index = Bytes::get_Java_u2(code + op + 1);
+                op += 2;
                 break;
             }
             case op_ldc:
@@ -129,6 +144,7 @@ namespace mini_jvm
                 u1 class_index = method_ref & 0xFF;
                 u1 name_and_type_index = method_ref >> 16;
                 invokevirtualMethod(class_index, name_and_type_index, kClass);
+                op += 2;
                 break;
             }
             case op_return:
@@ -167,6 +183,12 @@ namespace mini_jvm
                 std::cout << "op_iload_2" << std::endl;
                 break;
             }
+            case op_iload_3:
+            {
+                java_run_stack->top_frame()->load_int(3);
+                std::cout << "op_iload_3" << std::endl;
+                break;
+            }
             case op_invokestatic:
             {
                 const u2 index = Bytes::get_Java_u2(code + op + 1);
@@ -175,6 +197,7 @@ namespace mini_jvm
                 u1 class_index = method_ref & 0xFF;
                 u1 name_and_type_index = method_ref >> 16;
                 invokeStaticMethod(class_index, name_and_type_index, kClass);
+                op += 2;
                 std::cout << "op_invokestatic" << std::endl;
                 break;
             }
@@ -198,10 +221,13 @@ namespace mini_jvm
             }
             case op_ireturn:
             {
-                java_run_stack->top_frame()->pop_int_result();
+                java_run_stack->pop_int_result();
                 std::cout << "op_ireturn" << std::endl;
                 break;
             }
+            default:
+                assert(false);
+                break;
             }
         }
     }
@@ -211,10 +237,20 @@ namespace mini_jvm
         address native_function = method->native_function();
         // native 方法有了，怎么执行呢？尼玛, 找了一圈 jdk 源码也看不懂
         // 看样子只能用汇编调用的那一套来搞了，或者自己写一套规则来搞，还是突破一下用汇编吧
-        // TODO 目前测试，后面要写成自动的
+        java_run_stack->top_frame()->print_stack_frame();
         tmit_address_param0(_jniEnv);
+        // TODO 是不是静态方法，后面再搞
         tmit_address_param1(kClass);
-        tmit_int_param2(5);
+        // JNIEnv, jclass/jobject 后面才跟参数
+        const char *signature_str = kClass->constants()->symbol_at(method->signature_index());
+        std::tuple<int, std::vector<int>> parameterAndReturn = Signature::parseParameterAndReturn(signature_str);
+        int parameter_size = std::get<1>(parameterAndReturn).size();
+        // 第3个参数
+        StackValue* third_parameter = java_run_stack->top_frame()->get_data_by(0);
+        tmit_int_param2(third_parameter->value());
+        // 第4个参数
+        // 第5个参数
+        // 后面还有，可以想办法再写得通用一点
         __asm__ volatile(
             "ldr x20, %[func_ptr]\n"
             "blr x20\n"

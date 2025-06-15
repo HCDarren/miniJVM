@@ -3,11 +3,15 @@ cmake_minimum_required(VERSION 3.10)
 
 # 设置工程的名字，生成的可执行文件也将使用该名称
 project(main)
-set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD 14)
 
 # 给visual studio编译器使用的宏，Enable GCC debug
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-add_compile_options(-g -std=c++11)
+add_compile_options(
+        -g 
+        -std=c++17
+        #-DSTACK_DEBUG
+)
 
 # 头文件搜索路径
 include_directories(

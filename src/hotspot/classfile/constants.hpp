@@ -4,6 +4,7 @@
 
 namespace mini_jvm
 {
+
     enum Constants{
         JVM_CONSTANT_Utf8                   = 1,
         JVM_CONSTANT_Unicode                = 2, /* unused */
