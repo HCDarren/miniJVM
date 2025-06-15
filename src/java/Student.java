@@ -10,6 +10,6 @@ public class Student {
     }
 
     public void printAge() {
-        System.out.println(age);
+        Print.println(age);
     }
 }

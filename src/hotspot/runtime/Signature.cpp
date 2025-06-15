@@ -1,6 +1,7 @@
 #include "runtime/Signature.hpp"
 #include <vector>
 #include <tuple>
+#include <cassert>
 #include "utilities/GlobalDefinitions.hpp"
 
 namespace mini_jvm
@@ -110,5 +111,7 @@ namespace mini_jvm
             }
             i++;
         }
+        assert(false);
+        return {};
     }
 } // namespace name

@@ -66,7 +66,7 @@ namespace mini_jvm
         _local_slots[location]._integer_value = top_stack_value->_integer_value;
     }
 
-    StackValue* StackFrame::get_data_by(int location) {
+    StackValue* StackFrame::get_value_by(int location) {
         return &_local_slots[location];
     }
 

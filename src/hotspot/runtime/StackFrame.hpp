@@ -35,7 +35,7 @@ namespace mini_jvm
         // 打印栈帧数据好调试一点
         void print_stack_frame();
 
-        StackValue* get_data_by(int location);
+        StackValue* get_value_by(int location);
 
     private:
         // 上一个栈帧，_sender 哪个方法调用的

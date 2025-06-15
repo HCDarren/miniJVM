@@ -11,7 +11,7 @@ namespace mini_jvm
     };
 
     void Java_io_PrintStream::register_natives(JNIEnv* env) {
-        InstanceKClass* k_Class = ClassLoader::load_class("java/io/PrintStream");
+        InstanceKClass* k_Class = ClassLoader::load_class("Print");
         env->RegisterNatives((jclass)k_Class, PrintStream_methods, sizeof(PrintStream_methods) / sizeof(JNINativeMethod));
     }
 
@@ -20,6 +20,6 @@ namespace mini_jvm
     }
 
     JNIEXPORT void JNICALL java_io_PrintStream_println_I(JNIEnv *env, jobject obj, jint j_int) {
-        std::cout << j_int << std::endl;
+        std::cout << "printlnI: " <<j_int << std::endl;
     }
 } // namespace mini_jvm
