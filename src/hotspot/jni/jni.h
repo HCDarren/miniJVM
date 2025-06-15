@@ -15,6 +15,7 @@ class _jclass : public _jobject
 class _string : public _jobject {};
 
 typedef int jint;
+typedef long jlong;
 typedef unsigned char jboolean;
 typedef unsigned short jchar;
 typedef short jshort;

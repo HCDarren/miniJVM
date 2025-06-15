@@ -8,6 +8,7 @@
 #include <iostream>
 #include <cassert>
 #include "jni/Java_io_PrintStream.h"
+#include "jni/Java_native_DarrenThread.h"
 #include "cpu/aarch64/AssemblerAarch64.hpp"
 #include "runtime/JavaRunStack.hpp"
 #include "runtime/JavaThread.hpp"
@@ -52,6 +53,7 @@ namespace mini_jvm
     {
         _jniEnv = new JNIEnv();
         Java_io_PrintStream::register_natives(_jniEnv);
+        Java_native_DarrenThread::register_natives(_jniEnv);
         JavaThread *java_thread = new JavaThread();
         java_run_stack = java_thread->run_java_statck();
     }
