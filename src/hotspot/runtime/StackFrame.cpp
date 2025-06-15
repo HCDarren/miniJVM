@@ -1,6 +1,7 @@
 #include "runtime/StackFrame.hpp"
 #include <cassert>
 #include <iostream>
+#include "oops/Oop.hpp"
 
 namespace mini_jvm
 {
@@ -19,6 +20,12 @@ namespace mini_jvm
         delete[] _stack_slots;
     }
 
+    void StackFrame::push_to_stack(const StackValue* dststack_value) {
+        StackValue* dst = &_stack_slots[_stack_top_location++];
+        dst->_type = dststack_value->_type;
+        dst->_integer_value = dststack_value->_integer_value;
+    }
+
     void StackFrame::push_int_to_stack(int value)
     {
         StackValue* stack_value = &_stack_slots[_stack_top_location++];
@@ -26,10 +33,24 @@ namespace mini_jvm
         stack_value->_integer_value = value;
     }
 
-    int StackFrame::pop_int_from_stack() {
-        return _stack_slots[--_stack_top_location]._integer_value;
+    StackValue* StackFrame::pop_value_from_stack() {
+        return &_stack_slots[--_stack_top_location];
     }
     
+    void StackFrame::locals_load_to_stack(int location) {
+        StackValue* src_value = &_local_slots[location];
+        StackValue* dst_value = &_stack_slots[_stack_top_location++];
+        dst_value->_type = src_value->_type;
+        dst_value->_integer_value = src_value->_integer_value;
+    }
+
+    void StackFrame::stack_store_to_local(int location) {
+        StackValue* src_value = &_stack_slots[--_stack_top_location];
+        StackValue* dst_value = &_local_slots[location];
+        dst_value->_type = src_value->_type;
+        dst_value->_integer_value = src_value->_integer_value;
+    }
+
     // 将局部变量槽里的数据 push 到栈里面
     void StackFrame::load_int(int location) {
         assert(_sender != NULL);
@@ -49,6 +70,19 @@ namespace mini_jvm
         return &_local_slots[location];
     }
 
+    void StackFrame::push_obj_to_stack(const Oop* oop) {
+        StackValue* top_stack_value = &_stack_slots[_stack_top_location++];
+        top_stack_value->_type = T_OBJECT;
+        top_stack_value->_integer_value = (intptr_t)oop;
+    }
+
+    void StackFrame::dup_stack_top() {
+        StackValue* top_stack_value = &_stack_slots[_stack_top_location - 1];
+        StackValue* dup_stack_value = &_stack_slots[_stack_top_location++];
+        dup_stack_value->_type = top_stack_value->_type;
+        dup_stack_value->_integer_value = top_stack_value->_integer_value;
+    }
+    
     void StackFrame::print_stack_frame() {
 #if STACK_DEBUG
         std::cout << "-----------------------------------" << std::endl;

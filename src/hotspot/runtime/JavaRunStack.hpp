@@ -6,6 +6,7 @@ namespace mini_jvm
 {
     class StackFrame;
     class MethodInfo;
+    class InstanceKClass;
 
     class JavaRunStack
     {
@@ -16,12 +17,12 @@ namespace mini_jvm
         void push_frame(StackFrame* stack_frame);
         void pop_frame();
 
-        void push_call_parameters(const std::string& method_signature);
+        void push_call_parameters(const MethodInfo *method, const InstanceKClass *kClass);
 
         StackFrame* top_frame() {
             return _current_stack_frame;
         }
-        
+
         void pop_int_result();
 
     private:

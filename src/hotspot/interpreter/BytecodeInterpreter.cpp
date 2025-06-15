@@ -13,27 +13,36 @@
 #include "runtime/JavaThread.hpp"
 #include "runtime/StackFrame.hpp"
 #include "runtime/Signature.hpp"
+#include "oops/Oop.hpp"
 
 #define op_iconst_2 5
 #define op_iconst_3 6
 #define op_bipush 16
 #define op_sipush 17
 #define op_ldc 18
+#define op_aload 25
 #define op_iload_0 26
 #define op_iload_1 27
 #define op_iload_2 28
 #define op_iload_3 29
+#define op_aload_0 42
+#define op_astore 58
 #define op_istore_0 59
 #define op_istore_1 60
 #define op_istore_2 61
 #define op_istore_3 62
+#define op_dup 89
 #define op_iadd 96
 #define op_imul 104
 #define op_ireturn 172
 #define op_return 177
 #define op_getstatic 178
+#define op_getfield 180
+#define op_putfield 181
 #define op_invokevirtual 182
+#define op_invokespecial 183
 #define op_invokestatic 184
+#define op_new 187
 
 namespace mini_jvm
 {
@@ -47,13 +56,13 @@ namespace mini_jvm
 
     void BytecodeInterpreter::invoke(const MethodInfo *method, const InstanceKClass *kClass)
     {
+        
         StackFrame *frame = new StackFrame(method->max_locals(), method->max_stack());
         java_run_stack->push_frame(frame);
 
         // 把调用者的参数透传到目标方法的栈里面。栈拷贝
         // 栈 -> 栈，通过方法签名可以获取到参数
-        const char *signature_str = kClass->constants()->symbol_at(method->signature_index());
-        java_run_stack->push_call_parameters(std::string(signature_str));
+        java_run_stack->push_call_parameters(method, kClass);
 
         if (method->flags() & ACC_NATIVE)
         {
@@ -81,6 +90,61 @@ namespace mini_jvm
             std::cout << "exec instruct_code: ";
             switch (instruct_code)
             {
+            case op_astore:
+            {
+                const u1 index = *(code + op + 1);
+                java_run_stack->top_frame()->stack_store_to_local(index);
+                std::cout << "astore" << std::endl;
+                op += 1;
+                break;
+            } 
+            case op_aload:
+            {
+                const u1 index = *(code + op + 1);
+                java_run_stack->top_frame()->locals_load_to_stack(index);
+                std::cout << "aload" << std::endl;
+                op += 1;
+                break;
+            }
+            case op_aload_0:
+            {
+                java_run_stack->top_frame()->locals_load_to_stack(0);
+                std::cout << "aload_0" << std::endl;
+                break;
+            }
+            case op_invokespecial:
+            {
+                const u2 index = Bytes::get_Java_u2(code + op + 1);
+                assert(kClass->constants()->tag_at(index) == JVM_CONSTANT_Methodref);
+                u8 method_ref = kClass->constants()->method_at(index);
+                u1 class_index = method_ref & 0xFF;
+                u1 name_and_type_index = method_ref >> 16;
+                invokespecialMethod(class_index, name_and_type_index, kClass);
+                op += 2;
+                std::cout << "invokespecial" << std::endl;
+                break;
+            }
+            case op_putfield:
+            {
+                intptr_t value = java_run_stack->top_frame()->pop_value_from_stack()->value();
+                Oop* obj = (Oop*)java_run_stack->top_frame()->pop_value_from_stack()->value();
+                // TODO 给对象属性设置值，后面 gc 还要调整
+                const u2 filed_index = Bytes::get_Java_u2(code + op + 1);
+                obj->set_filed_value(filed_index, value);
+                std::cout << "putfield" << std::endl;
+                op += 2;
+                break;
+            }
+            case op_getfield:
+            {  
+                Oop* obj = (Oop*)java_run_stack->top_frame()->pop_value_from_stack()->value();
+                const u2 filed_index = Bytes::get_Java_u2(code + op + 1);
+                StackValue value = obj->get_filed_value(filed_index);
+                java_run_stack->top_frame()->push_to_stack(&value);
+                std::cout << "getfield" << std::endl;
+                op += 2;
+                break;
+            }
             case op_bipush:
             {
                 std::cout << "bipush" << std::endl;
@@ -132,6 +196,7 @@ namespace mini_jvm
             {
                 std::cout << "ldc" << std::endl;
                 const u1 index = *(code + op + 1);
+                op += 1;
                 // 将该常量的值（或引用）压入当前线程的操作数栈顶部。
                 break;
             }
@@ -203,8 +268,8 @@ namespace mini_jvm
             }
             case op_iadd:
             {
-                int number1 = java_run_stack->top_frame()->pop_int_from_stack();
-                int number2 = java_run_stack->top_frame()->pop_int_from_stack();
+                int number1 = java_run_stack->top_frame()->pop_value_from_stack()->value();
+                int number2 = java_run_stack->top_frame()->pop_value_from_stack()->value();
                 int sum = number1 + number2;
                 java_run_stack->top_frame()->push_int_to_stack(sum);
                 std::cout << "op_iadd" << std::endl;
@@ -212,8 +277,8 @@ namespace mini_jvm
             }
             case op_imul:
             {
-                int number1 = java_run_stack->top_frame()->pop_int_from_stack();
-                int number2 = java_run_stack->top_frame()->pop_int_from_stack();
+                int number1 = java_run_stack->top_frame()->pop_value_from_stack()->value();
+                int number2 = java_run_stack->top_frame()->pop_value_from_stack()->value();
                 int imul = number1 * number2;
                 java_run_stack->top_frame()->push_int_to_stack(imul);
                 std::cout << "imul" << std::endl;
@@ -225,11 +290,35 @@ namespace mini_jvm
                 std::cout << "op_ireturn" << std::endl;
                 break;
             }
+            case op_new:
+            {
+                const u2 index = Bytes::get_Java_u2(code + op + 1);
+                const u2 class_index = kClass->constants()->kclass_index_at(index);
+                const char* class_name = kClass->constants()->symbol_at(class_index);
+                invokeNew(std::string(class_name), kClass);
+                std::cout << "new" << std::endl;
+                op += 2;
+                break;
+            }
+            case op_dup:
+            {
+                java_run_stack->top_frame()->dup_stack_top();
+                std::cout << "dup" << std::endl;
+                break;
+            }
             default:
                 assert(false);
                 break;
             }
         }
+    }
+
+    void BytecodeInterpreter::invokeNew(const std::string &class_name, const InstanceKClass *kClass)
+    {
+        InstanceKClass *newClass = ClassLoader::load_class(class_name);
+        // TODO: 在堆上开辟内存，我先不管，后面 GC 再说
+        const Oop* obj = newClass->allocate_instance();
+        java_run_stack->top_frame()->push_obj_to_stack(obj);
     }
 
     void BytecodeInterpreter::invokeNativeMethod(const MethodInfo *method, const InstanceKClass *kClass)
@@ -263,6 +352,24 @@ namespace mini_jvm
         int class_name_index = kClass->constants()->kclass_index_at(class_index);
         const char *class_name = kClass->constants()->symbol_at(class_name_index);
         // TODO->这里要用 appClassLoader 去加载，还有双亲委派，jni 这些，也后面再看吧
+        InstanceKClass *newClass = ClassLoader::load_class(class_name);
+        u8 name_and_type = kClass->constants()->name_and_type_at(name_and_type_index);
+        int target_name_index = (name_and_type & 0xFF);
+        int target_signature_index = (name_and_type >> 16);
+        const char *target_method_name_str = kClass->constants()->symbol_at(target_name_index);
+        const char *target_signature_name_str = kClass->constants()->symbol_at(target_signature_index);
+        MethodInfo *method = newClass->findMethod(target_method_name_str, target_signature_name_str);
+        invoke(method, newClass);
+    }
+
+    void BytecodeInterpreter::invokespecialMethod(const u1 class_index, const u1 name_and_type_index, const InstanceKClass* kClass) {
+        int class_name_index = kClass->constants()->kclass_index_at(class_index);
+        const char *class_name = kClass->constants()->symbol_at(class_name_index);
+        if (strcmp(class_name, "java/lang/Object") == 0) {
+            // TODO Object 的初始化不走，不然死循环了，后面再弄
+            return;
+        }
+        // TODO->这里要用 appClassLoader 去加载，还有双亲委派，也后面再看吧
         InstanceKClass *newClass = ClassLoader::load_class(class_name);
         u8 name_and_type = kClass->constants()->name_and_type_at(name_and_type_index);
         int target_name_index = (name_and_type & 0xFF);

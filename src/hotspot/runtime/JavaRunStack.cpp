@@ -1,6 +1,7 @@
 #include "runtime/JavaRunStack.hpp"
 #include "runtime/StackFrame.hpp"
 #include "runtime/Signature.hpp"
+#include "oops/InstanceKClass.hpp"
 #include <cassert>
 #include <string>
 #include <vector>
@@ -30,17 +31,22 @@ namespace mini_jvm
     void JavaRunStack::pop_int_result() {
         StackValue* stack_top_value = &_current_stack_frame->_stack_slots[--_current_stack_frame->_stack_top_location];
         _current_stack_frame->_sender->push_int_to_stack(stack_top_value->_integer_value);
-        _current_stack_frame->_sender->print_stack_frame();
     }
 
-    void JavaRunStack::push_call_parameters(const std::string& method_signature) {
-        if (_current_stack_frame->_sender != NULL) {
+    void JavaRunStack::push_call_parameters(const MethodInfo *method, const InstanceKClass *kClass) {
+        if (_current_stack_frame->_sender->_sender != NULL) {
+            const char *method_signature = kClass->constants()->symbol_at(method->signature_index());
             std::tuple<int, std::vector<int>> parameterAndReturn = Signature::parseParameterAndReturn(method_signature);
             int parameter_size = std::get<1>(parameterAndReturn).size();
+            // 如果不是静态方法，默认有一个参数在最前面
+            if (!(method->flags() & ACC_STATIC)) {
+                parameter_size += 1;
+            }
+            // 方向要是反着的，不然执行命令后面就对不上了
             for (size_t i = 0; i < parameter_size; i++)
             {
                 StackValue* src_stack_value = &_current_stack_frame->_sender->_stack_slots[--_current_stack_frame->_sender->_stack_top_location];
-                StackValue* dst_local_value = &_current_stack_frame->_local_slots[i];
+                StackValue* dst_local_value = &_current_stack_frame->_local_slots[parameter_size - i - 1];
                 dst_local_value->_type = src_stack_value->_type;
                 dst_local_value->_integer_value = src_stack_value->_integer_value;
             }

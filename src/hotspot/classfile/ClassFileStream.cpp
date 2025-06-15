@@ -5,7 +5,7 @@
 namespace mini_jvm
 {
     ClassFileStream::ClassFileStream(const std::string& class_name){
-        std::string absolute_path = "/Users/darrenzeng/Desktop/Darren/Study/miniJVM/src/";
+        std::string absolute_path = "/Users/darrenzeng/Desktop/Darren/Study/miniJVM/src/java/";
         absolute_path += class_name.c_str();
         absolute_path += ".class";
         // 打开文件，一次性把文件读出来

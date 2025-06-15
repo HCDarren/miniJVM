@@ -8,6 +8,8 @@
 
 namespace mini_jvm
 {
+    class Oop;
+
     class InstanceKClass : public KClass
     {
     protected:
@@ -26,6 +28,14 @@ namespace mini_jvm
         void set_constants(ConstantPool *c)
         {
             _constants = c;
+        }
+
+        FieldInfo* fields() const{
+            return _fields;
+        }
+
+        u2 field_size() const{
+            return _field_size;
         }
 
         void set_fields(FieldInfo* fields) {
@@ -52,14 +62,18 @@ namespace mini_jvm
             return _class_name;
         }
 
-        u2 method_size() {
+        u2 method_size() const{
             return _method_size;
         }
 
-        MethodInfo* methods() {
+        MethodInfo* methods() const{
             return _methods;
         }
         
+        size_t size_helper();
+
+        Oop* allocate_instance();
+
         MethodInfo* findMethod(const char *method_name, const char *method_signature);
     };
 } // namespace name

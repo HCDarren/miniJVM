@@ -1,11 +1,16 @@
 public class MiniJVM {
-    private String name;
-    private int age;
+
     public static void main(String[] args) {
         int a = 12;
         int b = 13;
         int sum = sum(a, b);
-        System.out.println(sum);
+        //System.out.println(sum);
+
+        Student stu = new Student();
+        stu.setAge(30);
+        // stu.printAge();
+        int age = stu.getAge();
+        System.out.println(age);
     }
 
     public static int sum(int number1, int number2) {

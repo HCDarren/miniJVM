@@ -59,7 +59,7 @@ namespace mini_jvm
             return _val[cp_index];
         }
 
-        u8 kclass_index_at(const u2 cp_index)
+        u8 kclass_index_at(const u2 cp_index) const
         {
             return _val[cp_index];
         }
@@ -69,9 +69,9 @@ namespace mini_jvm
             return _val[cp_index];
         }
 
-        const char* symbol_at(const u2 cp_index) 
+        char* symbol_at(const u2 cp_index) 
         {
-            return (const char*)_val[cp_index];
+            return (char*)_val[cp_index];
         }
 
         u8 name_and_type_at(const u2 cp_index) {

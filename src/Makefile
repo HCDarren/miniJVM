@@ -369,6 +369,30 @@ hotspot/oops/KClass.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/KClass.cpp.s
 .PHONY : hotspot/oops/KClass.cpp.s
 
+hotspot/oops/MarkWord.o: hotspot/oops/MarkWord.cpp.o
+.PHONY : hotspot/oops/MarkWord.o
+
+# target to build an object file
+hotspot/oops/MarkWord.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/MarkWord.cpp.o
+.PHONY : hotspot/oops/MarkWord.cpp.o
+
+hotspot/oops/MarkWord.i: hotspot/oops/MarkWord.cpp.i
+.PHONY : hotspot/oops/MarkWord.i
+
+# target to preprocess a source file
+hotspot/oops/MarkWord.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/MarkWord.cpp.i
+.PHONY : hotspot/oops/MarkWord.cpp.i
+
+hotspot/oops/MarkWord.s: hotspot/oops/MarkWord.cpp.s
+.PHONY : hotspot/oops/MarkWord.s
+
+# target to generate assembly for a file
+hotspot/oops/MarkWord.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/MarkWord.cpp.s
+.PHONY : hotspot/oops/MarkWord.cpp.s
+
 hotspot/oops/Metadata.o: hotspot/oops/Metadata.cpp.o
 .PHONY : hotspot/oops/Metadata.o
 
@@ -416,6 +440,30 @@ hotspot/oops/MethodInfo.s: hotspot/oops/MethodInfo.cpp.s
 hotspot/oops/MethodInfo.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/MethodInfo.cpp.s
 .PHONY : hotspot/oops/MethodInfo.cpp.s
+
+hotspot/oops/Oop.o: hotspot/oops/Oop.cpp.o
+.PHONY : hotspot/oops/Oop.o
+
+# target to build an object file
+hotspot/oops/Oop.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/Oop.cpp.o
+.PHONY : hotspot/oops/Oop.cpp.o
+
+hotspot/oops/Oop.i: hotspot/oops/Oop.cpp.i
+.PHONY : hotspot/oops/Oop.i
+
+# target to preprocess a source file
+hotspot/oops/Oop.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/Oop.cpp.i
+.PHONY : hotspot/oops/Oop.cpp.i
+
+hotspot/oops/Oop.s: hotspot/oops/Oop.cpp.s
+.PHONY : hotspot/oops/Oop.s
+
+# target to generate assembly for a file
+hotspot/oops/Oop.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/Oop.cpp.s
+.PHONY : hotspot/oops/Oop.cpp.s
 
 hotspot/runtime/JavaRunStack.o: hotspot/runtime/JavaRunStack.cpp.o
 .PHONY : hotspot/runtime/JavaRunStack.o
@@ -648,12 +696,18 @@ help:
 	@echo "... hotspot/oops/KClass.o"
 	@echo "... hotspot/oops/KClass.i"
 	@echo "... hotspot/oops/KClass.s"
+	@echo "... hotspot/oops/MarkWord.o"
+	@echo "... hotspot/oops/MarkWord.i"
+	@echo "... hotspot/oops/MarkWord.s"
 	@echo "... hotspot/oops/Metadata.o"
 	@echo "... hotspot/oops/Metadata.i"
 	@echo "... hotspot/oops/Metadata.s"
 	@echo "... hotspot/oops/MethodInfo.o"
 	@echo "... hotspot/oops/MethodInfo.i"
 	@echo "... hotspot/oops/MethodInfo.s"
+	@echo "... hotspot/oops/Oop.o"
+	@echo "... hotspot/oops/Oop.i"
+	@echo "... hotspot/oops/Oop.s"
 	@echo "... hotspot/runtime/JavaRunStack.o"
 	@echo "... hotspot/runtime/JavaRunStack.i"
 	@echo "... hotspot/runtime/JavaRunStack.s"
