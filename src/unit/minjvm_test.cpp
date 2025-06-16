@@ -115,12 +115,13 @@ static void test_method_exec(InstanceKClass* kClass) {
     MethodInfo* methods = kClass->methods();
     u2 method_size = kClass->method_size();
     MethodInfo* main_method = kClass->findMethod("main", "([Ljava/lang/String;)V");
-    JavaThread javaThread;
-    javaThread.runJavaMethod(main_method, kClass);
+    JavaThread* javaThread = JavaThread::current();
+    javaThread->runJavaMethod(main_method, kClass);
 }
 
 void test() {
     InstanceKClass* kClass = mini_jvm::ClassLoader::load_class("MiniJVM");
+    kClass->initialize();
     //test_print_constant_pool(kClass);
     test_method_exec(kClass);
 }

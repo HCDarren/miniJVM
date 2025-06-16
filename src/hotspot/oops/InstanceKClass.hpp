@@ -5,6 +5,9 @@
 #include "oops/ConstantPool.hpp"
 #include "oops/FieldInfo.hpp"
 #include "oops/MethodInfo.hpp"
+#include "utilities/GlobalDefinitions.hpp"
+#include "runtime/StackValue.hpp"
+#include <map>
 
 namespace mini_jvm
 {
@@ -19,11 +22,17 @@ namespace mini_jvm
         FieldInfo* _fields;
         MethodInfo* _methods;
         std::string _class_name;
+        bool _is_initialized = false;
+    private:
+        std::map<u4, StackValue*> _static_values;
     public:
         ConstantPool *constants() const
         {
             return _constants;
         }
+
+        StackValue* get_static_value(const u2 name_index, const u2 name_and_type_index);
+        void set_static_value(const u2 name_index, const u2 name_and_type_index, StackValue* value);
 
         void set_constants(ConstantPool *c)
         {
@@ -69,6 +78,8 @@ namespace mini_jvm
         MethodInfo* methods() const{
             return _methods;
         }
+
+        void initialize();
         
         size_t size_helper();
 

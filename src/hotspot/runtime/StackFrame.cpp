@@ -37,7 +37,7 @@ namespace mini_jvm
     }
 
     StackValue* StackFrame::pop_value_from_stack() {
-        assert(_stack_top_location > 1);
+        assert(_stack_top_location >= 1);
         return &_stack_slots[--_stack_top_location];
     }
     
@@ -99,14 +99,14 @@ namespace mini_jvm
     void StackFrame::print_stack_frame() {
 #if STACK_DEBUG
         std::cout << "-----------------------------------" << std::endl;
-        std::cout << "local data:" << std::endl;
-        for (size_t i = 0; i < _local_slots_size; i++)
+        std::cout << "local data: " << _local_slots_size << std::endl;
+        for (int i = 0; i < _local_slots_size; i++)
         {
             std::cout << _local_slots[i]._integer_value << std::endl;
         }
 
-        std::cout << "stack data:" << std::endl;
-        for (size_t i = 0; i < _stack_top_location; i++)
+        std::cout << "stack data:" << _stack_top_location << std::endl;
+        for (int i = 0; i < _stack_top_location; i++)
         {
             std::cout << _stack_slots[i]._integer_value << std::endl;
         }

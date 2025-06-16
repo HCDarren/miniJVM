@@ -21,6 +21,7 @@
 #define op_bipush 16
 #define op_sipush 17
 #define op_ldc 18
+#define op_ldc2_w 20
 #define op_iload 21
 #define op_aload 25
 #define op_iload_0 26
@@ -29,6 +30,7 @@
 #define op_iload_3 29
 #define op_aload_0 42
 #define op_aload_1 43
+#define op_aload_2 44
 #define op_istore 54
 #define op_astore 58
 #define op_istore_0 59
@@ -43,6 +45,7 @@
 #define op_ireturn 172
 #define op_return 177
 #define op_getstatic 178
+#define op_putstatic 179
 #define op_getfield 180
 #define op_putfield 181
 #define op_invokevirtual 182
@@ -55,14 +58,15 @@ namespace mini_jvm
 {
     BytecodeInterpreter::BytecodeInterpreter()
     {
-        _jniEnv = new JNIEnv();
+        JavaThread *java_thread = JavaThread::current();
+        _jniEnv = java_thread->jniEnv();
+        java_run_stack = java_thread->run_java_statck();
+        // 注册 navtive 层的调用函数
         Java_io_PrintStream::register_natives(_jniEnv);
         Java_native_DarrenThread::register_natives(_jniEnv);
-        JavaThread *java_thread = new JavaThread();
-        java_run_stack = java_thread->run_java_statck();
     }
 
-    void BytecodeInterpreter::invoke(const MethodInfo *method, const InstanceKClass *kClass)
+    void BytecodeInterpreter::invoke(const MethodInfo *method, InstanceKClass *kClass)
     {
         
         StackFrame *frame = new StackFrame(method->max_locals(), method->max_stack());
@@ -86,7 +90,7 @@ namespace mini_jvm
     }
 
     // 执行方法，用解释器，模板机器码太复杂也不利于学习
-    void BytecodeInterpreter::invokeJavaMethod(const MethodInfo *method, const InstanceKClass *kClass)
+    void BytecodeInterpreter::invokeJavaMethod(const MethodInfo *method, InstanceKClass *kClass)
     {
         u1 *code = method->code();
         u4 code_length = method->code_length();
@@ -102,28 +106,24 @@ namespace mini_jvm
             {
             case op_astore:
             {
-                const u1 index = *(code + op + 1);
+                const u1 index = code[++op];
                 java_run_stack->top_frame()->stack_store_to_local(index);
-                op += 1;
                 break;
             } 
             case op_astore_1:
             {
                 java_run_stack->top_frame()->stack_store_to_local(1);
-                op += 1;
                 break;
             } 
             case op_astore_2:
             {
-                java_run_stack->top_frame()->stack_store_to_local(1);
-                op += 1;
+                java_run_stack->top_frame()->stack_store_to_local(2);
                 break;
             } 
             case op_aload:
             {
-                const u1 index = *(code + op + 1);
+                const u1 index = code[++op];
                 java_run_stack->top_frame()->locals_load_to_stack(index);
-                op += 1;
                 break;
             }
             case op_aload_0:
@@ -134,6 +134,11 @@ namespace mini_jvm
             case op_aload_1:
             {
                 java_run_stack->top_frame()->locals_load_to_stack(1);
+                break;
+            }
+            case op_aload_2:
+            {
+                java_run_stack->top_frame()->locals_load_to_stack(2);
                 break;
             }
             case op_invokespecial:
@@ -178,13 +183,13 @@ namespace mini_jvm
                 const u2 value = Bytes::get_Java_u2(code + op + 1);
                 // 将 value 压入栈顶
                 java_run_stack->top_frame()->push_int_to_stack(value);
+                op += 2;
                 break;
             }
             case op_istore:
             {
-                const u1 index = *(code + op + 1);
+                const u1 index = code[++op];
                 java_run_stack->top_frame()->store_int(index);
-                op += 1;
                 break;
             }
             case op_istore_0:
@@ -210,13 +215,47 @@ namespace mini_jvm
             case op_getstatic:
             {
                 const u2 index = Bytes::get_Java_u2(code + op + 1);
+                u8 filed_ref = kClass->constants()->method_at(index);
+                u1 name_index = filed_ref & 0xFF;
+                u1 name_and_type_index = filed_ref >> 16;
+                StackValue* value = kClass->get_static_value(name_index, name_and_type_index);
+                java_run_stack->top_frame()->push_to_stack(value);
+                op += 2;
+                break;
+            }
+            case op_putstatic:
+            {
+                const u2 index = Bytes::get_Java_u2(code + op + 1);
+                StackValue* value = java_run_stack->top_frame()->pop_value_from_stack();
+                StackValue new_value = *value;
+                u8 filed_ref = kClass->constants()->method_at(index);
+                u1 name_index = filed_ref & 0xFF;
+                u1 name_and_type_index = filed_ref >> 16;
+                kClass->set_static_value(name_index, name_and_type_index, &new_value);
                 op += 2;
                 break;
             }
             case op_ldc:
             {
-                const u1 index = *(code + op + 1);
-                op += 1;
+                const u1 index = code[++op];
+                // 将该常量的值（或引用）压入当前线程的操作数栈顶部。
+                break;
+            }
+            case op_ldc2_w:
+            {
+                const u2 index = Bytes::get_Java_u2(code + op + 1);
+                const u1 tag = kClass->constants()->tag_at(index);
+                StackValue dststack_value;
+                if (tag == JVM_CONSTANT_Long) { // long
+                    dststack_value._type = T_LONG;
+                } else if (tag == JVM_CONSTANT_Double) { // double
+                    dststack_value._type = T_DOUBLE;
+                } else {
+                    assert(false);
+                }
+                dststack_value._integer_value = kClass->constants()->value_at(index);
+                java_run_stack->top_frame()->push_to_stack(&dststack_value);
+                op += 2;
                 // 将该常量的值（或引用）压入当前线程的操作数栈顶部。
                 break;
             }
@@ -233,7 +272,6 @@ namespace mini_jvm
             }
             case op_return:
             {
-                op += 1;
                 break;
             }
             case op_iconst_2:
@@ -248,9 +286,8 @@ namespace mini_jvm
             }
             case op_iload:
             {
-                const u1 index = *(code + op + 1);
+                const u1 index = code[++op];
                 java_run_stack->top_frame()->load_int(index);
-                op += 1;
                 break;
             }
             case op_iload_0:
@@ -331,15 +368,17 @@ namespace mini_jvm
         }
     }
 
-    void BytecodeInterpreter::invokeNew(const std::string &class_name, const InstanceKClass *kClass)
+    void BytecodeInterpreter::invokeNew(const std::string &class_name, InstanceKClass *kClass)
     {
         InstanceKClass *newClass = ClassLoader::load_class(class_name);
+        // new 指令触发类的初始化机制
+        newClass->initialize();
         // TODO: 在堆上开辟内存，我先不管，后面 GC 再说
         const Oop* obj = newClass->allocate_instance();
         java_run_stack->top_frame()->push_obj_to_stack(obj);
     }
 
-    void BytecodeInterpreter::invokeNativeMethod(const MethodInfo *method, const InstanceKClass *kClass)
+    void BytecodeInterpreter::invokeNativeMethod(const MethodInfo *method, InstanceKClass *kClass)
     {
         address native_function = method->native_function();
         // native 方法有了，怎么执行呢？尼玛, 找了一圈 jdk 源码也看不懂
@@ -365,7 +404,7 @@ namespace mini_jvm
             : [func_ptr] "m"(native_function));
     }
 
-    void BytecodeInterpreter::invokeStaticMethod(const u1 class_index, const u1 name_and_type_index, const InstanceKClass *kClass)
+    void BytecodeInterpreter::invokeStaticMethod(const u1 class_index, const u1 name_and_type_index, InstanceKClass *kClass)
     {
         int class_name_index = kClass->constants()->kclass_index_at(class_index);
         const char *class_name = kClass->constants()->symbol_at(class_name_index);
@@ -380,11 +419,12 @@ namespace mini_jvm
         invoke(method, newClass);
     }
 
-    void BytecodeInterpreter::invokespecialMethod(const u1 class_index, const u1 name_and_type_index, const InstanceKClass* kClass) {
+    void BytecodeInterpreter::invokespecialMethod(const u1 class_index, const u1 name_and_type_index, InstanceKClass* kClass) {
         int class_name_index = kClass->constants()->kclass_index_at(class_index);
         const char *class_name = kClass->constants()->symbol_at(class_name_index);
         if (strcmp(class_name, "java/lang/Object") == 0) {
-            // TODO Object 的初始化不走，不然死循环了，后面再弄
+            // TODO Object 的初始化不走，不然死循环了，后面再弄，但是会传一个参数，需要 pop
+            java_run_stack->top_frame()->pop_value_from_stack();
             return;
         }
         // TODO->这里要用 appClassLoader 去加载，还有双亲委派，也后面再看吧
@@ -399,7 +439,7 @@ namespace mini_jvm
     }
 
     // 这里后面的代码要搬走
-    void BytecodeInterpreter::invokevirtualMethod(const u1 class_index, const u1 name_and_type_index, const InstanceKClass *kClass)
+    void BytecodeInterpreter::invokevirtualMethod(const u1 class_index, const u1 name_and_type_index, InstanceKClass *kClass)
     {
         int class_name_index = kClass->constants()->kclass_index_at(class_index);
         const char *class_name = kClass->constants()->symbol_at(class_name_index);

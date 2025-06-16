@@ -16,13 +16,13 @@ namespace mini_jvm
     class BytecodeInterpreter
     {
     public:
-        void invoke(const MethodInfo *method, const InstanceKClass* kClass);
-        void invokeJavaMethod(const MethodInfo *method, const InstanceKClass* kClass);
-        void invokeNativeMethod(const MethodInfo *method, const InstanceKClass* kClass);
-        void invokevirtualMethod(const u1 class_index, const u1 name_and_type_index, const InstanceKClass* kClass);
-        void invokespecialMethod(const u1 class_index, const u1 name_and_type_index, const InstanceKClass* kClass);
-        void invokeStaticMethod(const u1 class_index, const u1 name_and_type_index, const InstanceKClass* kClass);
-        void invokeNew(const std::string &class_name, const InstanceKClass *kClass);
+        void invoke(const MethodInfo *method, InstanceKClass* kClass);
+        void invokeJavaMethod(const MethodInfo *method, InstanceKClass* kClass);
+        void invokeNativeMethod(const MethodInfo *method, InstanceKClass* kClass);
+        void invokevirtualMethod(const u1 class_index, const u1 name_and_type_index, InstanceKClass* kClass);
+        void invokespecialMethod(const u1 class_index, const u1 name_and_type_index, InstanceKClass* kClass);
+        void invokeStaticMethod(const u1 class_index, const u1 name_and_type_index, InstanceKClass* kClass);
+        void invokeNew(const std::string &class_name, InstanceKClass *kClass);
     public:
         BytecodeInterpreter();
         ~BytecodeInterpreter();

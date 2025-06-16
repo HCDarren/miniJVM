@@ -10,6 +10,8 @@ namespace mini_jvm
         friend class StackFrame;
         friend class JavaRunStack;
         friend class Oop;
+        friend class BytecodeInterpreter;
+        friend class InstanceKClass;
 
     public:
         StackValue()

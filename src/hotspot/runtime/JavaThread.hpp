@@ -8,6 +8,7 @@ namespace mini_jvm
     class JavaRunStack;
     class InstanceKClass;
     class MethodInfo;
+    class JNIEnv;
 
     class JavaThread : public Thread
     {
@@ -15,14 +16,18 @@ namespace mini_jvm
         JavaThread();
         ~JavaThread();
     public:
+        static JavaThread* current();
+
         JavaRunStack* run_java_statck() {
             return _run_java_statck;
         }
-
-        void runJavaMethod(MethodInfo* method, const InstanceKClass *kClass);
+        JNIEnv* jniEnv() {
+            return _jniEnv;
+        }
+        void runJavaMethod(MethodInfo* method, InstanceKClass *kClass);
     private:
         JavaRunStack* _run_java_statck;
-
+        JNIEnv* _jniEnv;
     };
 } // namespace name
 

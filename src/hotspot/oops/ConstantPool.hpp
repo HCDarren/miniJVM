@@ -49,6 +49,11 @@ namespace mini_jvm
             _val[cp_index] = (u8)str;
         }
 
+        const u8 value_at(const u2 cp_index) 
+        {
+            return _val[cp_index];
+        }
+
         void long_at_put(const u2 cp_index, const u8 value) 
         {
             _tag[cp_index] = JVM_CONSTANT_Long;

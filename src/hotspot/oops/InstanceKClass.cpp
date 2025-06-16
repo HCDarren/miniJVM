@@ -1,9 +1,11 @@
 #include "oops/InstanceKClass.hpp"
 #include "interpreter/BytecodeInterpreter.hpp"
 #include "oops/Oop.hpp"
+#include "runtime/JavaThread.hpp"
 
 namespace mini_jvm
 {
+
     MethodInfo *InstanceKClass::findMethod(const char *method_name, const char *method_signature)
     {
         for (size_t i = 0; i < _method_size; i++)
@@ -26,10 +28,41 @@ namespace mini_jvm
         return (2 + _field_size) * sizeof(void*);
     }
 
+    void InstanceKClass::initialize() {
+        // TODO 多线程要加锁，类只能被初始化一次，后面再说吧
+        if (!_is_initialized) {
+            _is_initialized = true;
+            // 父类好像也要初始化，先也不管
+            MethodInfo* clinit = findMethod("<clinit>", "()V");
+            if (clinit != NULL) {
+                JavaThread* javaThread = JavaThread::current();
+                javaThread->runJavaMethod(clinit, this);
+            }
+        }
+    }
+
+    StackValue* InstanceKClass::get_static_value(const u2 name_index, const u2 name_and_type_index) {
+        // TODO 要做 filed 查找匹配，如果自己这里找不到，递归触发父类的设置，全部匹配不到就报错，后面再看吧
+        // 简单做直接存了，也有内存泄漏
+        u4 key = (name_index << 16) | name_and_type_index;
+        return _static_values[key];
+    }
+
+    void InstanceKClass::set_static_value(const u2 name_index, const u2 name_and_type_index, StackValue* value) {
+        // TODO 要做 filed 查找匹配，如果自己这里找不到，递归触发父类的设置，全部匹配不到就报错，后面再看吧
+        // 简单做直接存了，也有内存泄漏
+        u4 key = (name_index << 16) | name_and_type_index;
+        StackValue* new_value = new StackValue();
+        new_value->_type = value->_type;
+        new_value->_integer_value = value->_integer_value;
+        _static_values[key] = new_value;
+    }
+
     Oop* InstanceKClass::allocate_instance() {
         size_t size = size_helper();
         // TODO 后面进行堆管理，等写 GC 的时候再说吧
         Oop* new_oop = (Oop*)malloc(size);
+        memset(new_oop, 0, size); // 全部都设置为默认值 0
         new_oop->_metadata = this;
         return new_oop;
     }

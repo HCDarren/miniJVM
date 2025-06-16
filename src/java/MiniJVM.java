@@ -28,7 +28,7 @@ public class MiniJVM implements DarrenRunnable{
         thread1.start();
         thread2.start();
         DarrenThread.sleepNanos(1000);
-        Print.println("age = " + student.getAge());
+        Print.println(student.getAge());
     }
 
     public static int sum(int number1, int number2) {
