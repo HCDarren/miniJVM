@@ -5,6 +5,8 @@
 #define JNICALL
 #include <string>
 #include "utilities/GlobalDefinitions.hpp"
+#include <pthread.h>
+#include <map>
 
 class _jobject
 {
@@ -26,11 +28,17 @@ typedef jint jsize;
 typedef _jobject* jobject;
 typedef _jclass* jclass;
 typedef _jclass* jstring;
+struct _jfieldID;
+typedef struct _jfieldID *jfieldID;
+
+struct _jmethodID;
+typedef struct _jmethodID *jmethodID;
 
 namespace mini_jvm
 {
 
     class InstanceKClass;
+    class JavaThread;
 
     /*
      * used in RegisterNatives to describe native method name, signature,
@@ -46,7 +54,23 @@ namespace mini_jvm
     class JNIEnv
     {
         public:
-            jint RegisterNatives(jclass clazz, const JNINativeMethod *methods, jint nMethods);
+            jint RegisterNatives(const jclass clazz, const JNINativeMethod *methods, const jint nMethods);
+            jclass GetObjectClass(const jobject jobj);
+            jclass FindClass(const std::string class_name);
+            jmethodID GetMethod(const jclass clazz, const std::string method_name, const std::string method_signature);
+            void CallVoidMethod(const jobject jobj,const jmethodID mid);
+            void CallStaticVoidMethod(jclass clazz, const jmethodID mid);
+
+    };
+
+    class JavaVM
+    {
+        private:
+            std::map<pthread_t, JavaThread*> _thread_infos;
+        public:
+            JavaThread* current_thread();
+            static JavaVM* current();
+            void attachThread(JavaThread* java_thread);
     };
 }
 #endif

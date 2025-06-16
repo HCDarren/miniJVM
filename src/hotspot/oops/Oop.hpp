@@ -18,6 +18,7 @@ namespace mini_jvm
         JavaFiled* find_java_field(const u2 filed_cp_index);
         void set_filed_value(const u2 filed_cp_index, const intptr_t value);
         StackValue get_filed_value(const u2 filed_cp_index);
+        InstanceKClass* metadata_class();
 
     private:
         // TODO: 后面 gc 的时候有用

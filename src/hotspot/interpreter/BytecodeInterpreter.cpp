@@ -15,6 +15,7 @@
 #include "runtime/StackFrame.hpp"
 #include "runtime/Signature.hpp"
 #include "oops/Oop.hpp"
+#include "jni/jni.h"
 
 #define op_iconst_2 5
 #define op_iconst_3 6
@@ -56,9 +57,8 @@
 
 namespace mini_jvm
 {
-    BytecodeInterpreter::BytecodeInterpreter()
+    BytecodeInterpreter::BytecodeInterpreter(JavaThread *java_thread)
     {
-        JavaThread *java_thread = JavaThread::current();
         _jniEnv = java_thread->jniEnv();
         java_run_stack = java_thread->run_java_statck();
         // 注册 navtive 层的调用函数
@@ -384,19 +384,28 @@ namespace mini_jvm
         // native 方法有了，怎么执行呢？尼玛, 找了一圈 jdk 源码也看不懂
         // 看样子只能用汇编调用的那一套来搞了，或者自己写一套规则来搞，还是突破一下用汇编吧
         java_run_stack->top_frame()->print_stack_frame();
-        tmit_address_param0(_jniEnv);
-        // TODO 是不是静态方法，后面再搞
-        tmit_address_param1(kClass);
-        // JNIEnv, jclass/jobject 后面才跟参数
         const char *signature_str = kClass->constants()->symbol_at(method->signature_index());
         std::tuple<int, std::vector<int>> parameterAndReturn = Signature::parseParameterAndReturn(signature_str);
         int parameter_size = std::get<1>(parameterAndReturn).size();
-        // 第3个参数
-        StackValue* third_parameter = java_run_stack->top_frame()->get_value_by(0);
-        tmit_int_param2(third_parameter->value());
-        // 第4个参数
-        // 第5个参数
-        // 后面还有，可以想办法再写得通用一点
+    
+        // JNIEnv, jclass/jobject 后面才跟参数
+        int index = 0;
+        if (method->flags() & ACC_STATIC) {
+            tmit_address_param1(kClass);
+        } else {
+            StackValue* object = java_run_stack->top_frame()->get_value_by(index++);
+            tmit_address_param1((void*)object->value());
+        }
+        
+        for (int i = index; i < parameter_size; i++)
+        {
+            StackValue* object = java_run_stack->top_frame()->get_value_by(i);
+            // TODO 后面开始第二个参数，后面想办法怎么写得通用，这是个 bug 代码
+            tmit_int_param2(object->value());
+        }
+
+        // x0 传来传去必须放最后，不然一切白干
+        tmit_address_param0(_jniEnv); 
         __asm__ volatile(
             "ldr x20, %[func_ptr]\n"
             "blr x20\n"

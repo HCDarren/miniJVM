@@ -12,6 +12,7 @@ namespace mini_jvm
     class InstanceKClass;
     class JNIEnv;
     class JavaRunStack;
+    class JavaThread;
 
     class BytecodeInterpreter
     {
@@ -24,7 +25,7 @@ namespace mini_jvm
         void invokeStaticMethod(const u1 class_index, const u1 name_and_type_index, InstanceKClass* kClass);
         void invokeNew(const std::string &class_name, InstanceKClass *kClass);
     public:
-        BytecodeInterpreter();
+        BytecodeInterpreter(JavaThread *java_thread);
         ~BytecodeInterpreter();
     private:
         JNIEnv* _jniEnv;

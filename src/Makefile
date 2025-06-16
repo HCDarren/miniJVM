@@ -249,6 +249,30 @@ hotspot/jni/JNIEnv.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/JNIEnv.cpp.s
 .PHONY : hotspot/jni/JNIEnv.cpp.s
 
+hotspot/jni/JavaVM.o: hotspot/jni/JavaVM.cpp.o
+.PHONY : hotspot/jni/JavaVM.o
+
+# target to build an object file
+hotspot/jni/JavaVM.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/JavaVM.cpp.o
+.PHONY : hotspot/jni/JavaVM.cpp.o
+
+hotspot/jni/JavaVM.i: hotspot/jni/JavaVM.cpp.i
+.PHONY : hotspot/jni/JavaVM.i
+
+# target to preprocess a source file
+hotspot/jni/JavaVM.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/JavaVM.cpp.i
+.PHONY : hotspot/jni/JavaVM.cpp.i
+
+hotspot/jni/JavaVM.s: hotspot/jni/JavaVM.cpp.s
+.PHONY : hotspot/jni/JavaVM.s
+
+# target to generate assembly for a file
+hotspot/jni/JavaVM.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/JavaVM.cpp.s
+.PHONY : hotspot/jni/JavaVM.cpp.s
+
 hotspot/jni/Java_io_PrintStream.o: hotspot/jni/Java_io_PrintStream.cpp.o
 .PHONY : hotspot/jni/Java_io_PrintStream.o
 
@@ -705,6 +729,9 @@ help:
 	@echo "... hotspot/jni/JNIEnv.o"
 	@echo "... hotspot/jni/JNIEnv.i"
 	@echo "... hotspot/jni/JNIEnv.s"
+	@echo "... hotspot/jni/JavaVM.o"
+	@echo "... hotspot/jni/JavaVM.i"
+	@echo "... hotspot/jni/JavaVM.s"
 	@echo "... hotspot/jni/Java_io_PrintStream.o"
 	@echo "... hotspot/jni/Java_io_PrintStream.i"
 	@echo "... hotspot/jni/Java_io_PrintStream.s"

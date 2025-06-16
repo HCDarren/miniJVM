@@ -43,7 +43,7 @@ namespace mini_jvm
         StackValue* _local_slots;
         StackValue* _stack_slots;
         int _local_slots_size;
-        int _maxt_stack_size;
+        int _max_stack_size;
         int _stack_top_location;
     };
 } // namespace name

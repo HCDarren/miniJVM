@@ -44,5 +44,9 @@ namespace mini_jvm
         res._integer_value = (intptr_t)*java_filed;
         return res;
     }
+
+    InstanceKClass* Oop::metadata_class() {
+        return this->_metadata;
+    }
     
 } // namespace mini_jvm

@@ -2,6 +2,8 @@
 #include "interpreter/BytecodeInterpreter.hpp"
 #include "oops/Oop.hpp"
 #include "runtime/JavaThread.hpp"
+#include "jni/jni.h"
+#include <assert.h>
 
 namespace mini_jvm
 {
@@ -33,10 +35,11 @@ namespace mini_jvm
         if (!_is_initialized) {
             _is_initialized = true;
             // 父类好像也要初始化，先也不管
-            MethodInfo* clinit = findMethod("<clinit>", "()V");
+            const MethodInfo* clinit = findMethod("<clinit>", "()V");
             if (clinit != NULL) {
                 JavaThread* javaThread = JavaThread::current();
-                javaThread->runJavaMethod(clinit, this);
+                JNIEnv* jniEnv = javaThread->jniEnv();
+                jniEnv->CallStaticVoidMethod((jclass)this, (jmethodID)clinit);
             }
         }
     }

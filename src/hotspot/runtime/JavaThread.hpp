@@ -2,6 +2,7 @@
 #define DAREEN_MINIJVM_OOPS_JAVATHREAD
 
 #include "runtime/Thread.hpp"
+#include <pthread.h>
 
 namespace mini_jvm
 {
@@ -9,6 +10,7 @@ namespace mini_jvm
     class InstanceKClass;
     class MethodInfo;
     class JNIEnv;
+    class BytecodeInterpreter;
 
     class JavaThread : public Thread
     {
@@ -21,13 +23,19 @@ namespace mini_jvm
         JavaRunStack* run_java_statck() {
             return _run_java_statck;
         }
+        
         JNIEnv* jniEnv() {
             return _jniEnv;
         }
-        void runJavaMethod(MethodInfo* method, InstanceKClass *kClass);
+
+        BytecodeInterpreter* interpreter() {
+            return _interpreter;
+        }
     private:
         JavaRunStack* _run_java_statck;
         JNIEnv* _jniEnv;
+        pthread_t _tid;
+        BytecodeInterpreter* _interpreter;
     };
 } // namespace name
 
