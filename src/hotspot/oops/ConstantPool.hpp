@@ -19,6 +19,11 @@ namespace mini_jvm
             _val[cp_index] = ((u8)signature_index << 16) | name_index;
         }
 
+        u8 interface_method_at(const u2 cp_index)
+        {
+            return _val[cp_index];
+        }
+
         void interface_method_at_put(const u2 cp_index, const u2 name_index, const u2 signature_index)
         {
             _tag[cp_index] = JVM_CONSTANT_InterfaceMethodref;
@@ -57,6 +62,12 @@ namespace mini_jvm
         void long_at_put(const u2 cp_index, const u8 value) 
         {
             _tag[cp_index] = JVM_CONSTANT_Long;
+            _val[cp_index] = value;
+        }
+
+        void int_at_put(const u2 cp_index, const u4 value) 
+        {
+            _tag[cp_index] = JVM_CONSTANT_Integer;
             _val[cp_index] = value;
         }
 

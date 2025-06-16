@@ -17,6 +17,7 @@
 #include "oops/Oop.hpp"
 #include "jni/jni.h"
 
+#define op_iconst_0 3
 #define op_iconst_2 5
 #define op_iconst_3 6
 #define op_bipush 16
@@ -43,6 +44,9 @@
 #define op_dup 89
 #define op_iadd 96
 #define op_imul 104
+#define op_iinc 132
+#define op_if_icmpge 162
+#define op_goto 167
 #define op_ireturn 172
 #define op_return 177
 #define op_getstatic 178
@@ -52,6 +56,7 @@
 #define op_invokevirtual 182
 #define op_invokespecial 183
 #define op_invokestatic 184
+#define invokeinterface 185
 #define op_new 187
 #define op_ifnull 198
 
@@ -274,6 +279,11 @@ namespace mini_jvm
             {
                 break;
             }
+            case op_iconst_0:
+            {
+                java_run_stack->top_frame()->push_int_to_stack(0);
+                break;
+            }
             case op_iconst_2:
             {
                 java_run_stack->top_frame()->push_int_to_stack(2);
@@ -321,6 +331,17 @@ namespace mini_jvm
                 op += 2;
                 break;
             }
+            case invokeinterface:
+            {
+                const u2 index = Bytes::get_Java_u2(code + op + 1);
+                assert(kClass->constants()->tag_at(index) == JVM_CONSTANT_InterfaceMethodref);
+                u8 method_ref = kClass->constants()->interface_method_at(index);
+                u1 class_index = method_ref & 0xFF;
+                u1 name_and_type_index = method_ref >> 16;
+                invokeInterfaceMethod(class_index, name_and_type_index, kClass);
+                op += 4; // 直接跳四个
+                break;
+            }
             case op_iadd:
             {
                 int number1 = java_run_stack->top_frame()->pop_value_from_stack()->value();
@@ -335,6 +356,34 @@ namespace mini_jvm
                 int number2 = java_run_stack->top_frame()->pop_value_from_stack()->value();
                 int imul = number1 * number2;
                 java_run_stack->top_frame()->push_int_to_stack(imul);
+                break;
+            }
+            case op_iinc:
+            {
+                int index = code[++op];
+                int inc = code[++op];
+                StackValue* stack_value = java_run_stack->top_frame()->get_value_by(index);
+                stack_value->_integer_value += inc;
+                break;
+            }
+            case op_if_icmpge:
+            {
+                const u2 goto_index = Bytes::get_Java_u2(code + op + 1);
+                int number2 = java_run_stack->top_frame()->pop_value_from_stack()->value();
+                int number1 = java_run_stack->top_frame()->pop_value_from_stack()->value();
+                if (number1 >= number2) {
+                    op += goto_index - 1;
+                } else {
+                    op += 2;
+                }
+                break;
+            }
+            case op_goto:
+            {
+                u2 goto_index = Bytes::get_Java_u2(code + op + 1);
+                // 这是个坑... 查了很久
+                goto_index += (u2)op;
+                op = goto_index - 1;
                 break;
             }
             case op_ireturn:
@@ -353,7 +402,14 @@ namespace mini_jvm
             }
             case op_ifnull:
             {
-                
+                const u2 offset = Bytes::get_Java_u2(code + op + 1);
+                intptr_t value = java_run_stack->top_frame()->pop_value_from_stack()->value();
+                if (value != 0) {
+                    // 不等于 null 跳转到目标位置
+                    op = offset - 1;
+                } else {
+                    op += 2;
+                }
                 break;
             }
             case op_dup:
@@ -411,6 +467,22 @@ namespace mini_jvm
             "blr x20\n"
             :
             : [func_ptr] "m"(native_function));
+    }
+
+    void BytecodeInterpreter::invokeInterfaceMethod(const u1 class_index, const u1 name_and_type_index, InstanceKClass *kClass) {
+        StackValue* stack_value = java_run_stack->top_frame()->pop_value_from_stack();
+        // assert(stack_value->type() == T_OBJECT);
+        Oop* oop = (Oop*)stack_value->value();
+        java_run_stack->top_frame()->push_obj_to_stack(oop);
+        // TODO 要递归去找方法，这里也没有做了
+        InstanceKClass* tartget_Class = oop->metadata_class();
+        u8 name_and_type = kClass->constants()->name_and_type_at(name_and_type_index);
+        int target_name_index = (name_and_type & 0xFF);
+        int target_signature_index = (name_and_type >> 16);
+        const char *target_method_name_str = kClass->constants()->symbol_at(target_name_index);
+        const char *target_signature_name_str = kClass->constants()->symbol_at(target_signature_index);
+        MethodInfo *method = tartget_Class->findMethod(target_method_name_str, target_signature_name_str);
+        invoke(method, tartget_Class);
     }
 
     void BytecodeInterpreter::invokeStaticMethod(const u1 class_index, const u1 name_and_type_index, InstanceKClass *kClass)

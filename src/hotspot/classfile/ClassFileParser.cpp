@@ -159,8 +159,11 @@ namespace mini_jvm
 
                 break;
             case JVM_CONSTANT_Integer:
-
+            {
+                const u4 value = stream->get_u4();
+                cp->int_at_put(index, value);
                 break;
+            }
             case JVM_CONSTANT_Float:
 
                 break;

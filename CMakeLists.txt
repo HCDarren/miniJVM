@@ -10,8 +10,8 @@ add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 add_compile_options(
         -g 
         -std=c++11
-        -DSTACK_DEBUG
-        -DEXEC_INSTRUCT_DEBUG
+        #-DSTACK_DEBUG
+        #-DEXEC_INSTRUCT_DEBUG
 )
 
 # 头文件搜索路径

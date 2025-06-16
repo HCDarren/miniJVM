@@ -46,11 +46,10 @@ namespace mini_jvm
         if (ret != 0) {
             return;
         }
-        pthread_join(tid, NULL);
     }
 
     JNIEXPORT void JNICALL Java_DarrenThread_sleepNanos(JNIEnv *, jclass, jlong sleepNanos)
     {
-        // usleep(sleepNanos * 1000);
+        usleep(sleepNanos * 1000);
     }
 } // namespace mini_jvm

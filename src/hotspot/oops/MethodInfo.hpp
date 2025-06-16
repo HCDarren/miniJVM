@@ -2,7 +2,9 @@
 #define DAREEN_MINIJVM_OOPS_METHODINFO
 
 #include "utilities/GlobalDefinitions.hpp"
+#include "utilities/bytes_arm.hpp"
 #include "classfile/constants.hpp"
+#include <iostream>
 
 namespace mini_jvm
 {

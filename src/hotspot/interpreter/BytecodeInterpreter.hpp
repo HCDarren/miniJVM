@@ -20,6 +20,7 @@ namespace mini_jvm
         void invoke(const MethodInfo *method, InstanceKClass* kClass);
         void invokeJavaMethod(const MethodInfo *method, InstanceKClass* kClass);
         void invokeNativeMethod(const MethodInfo *method, InstanceKClass* kClass);
+        void invokeInterfaceMethod(const u1 class_index, const u1 name_and_type_index, InstanceKClass *kClass);
         void invokevirtualMethod(const u1 class_index, const u1 name_and_type_index, InstanceKClass* kClass);
         void invokespecialMethod(const u1 class_index, const u1 name_and_type_index, InstanceKClass* kClass);
         void invokeStaticMethod(const u1 class_index, const u1 name_and_type_index, InstanceKClass* kClass);
