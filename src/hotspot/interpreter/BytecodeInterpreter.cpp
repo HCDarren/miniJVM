@@ -28,12 +28,15 @@
 #define op_iload_2 28
 #define op_iload_3 29
 #define op_aload_0 42
+#define op_aload_1 43
 #define op_istore 54
 #define op_astore 58
 #define op_istore_0 59
 #define op_istore_1 60
 #define op_istore_2 61
 #define op_istore_3 62
+#define op_astore_1 76
+#define op_astore_2 77
 #define op_dup 89
 #define op_iadd 96
 #define op_imul 104
@@ -46,6 +49,7 @@
 #define op_invokespecial 183
 #define op_invokestatic 184
 #define op_new 187
+#define op_ifnull 198
 
 namespace mini_jvm
 {
@@ -103,6 +107,18 @@ namespace mini_jvm
                 op += 1;
                 break;
             } 
+            case op_astore_1:
+            {
+                java_run_stack->top_frame()->stack_store_to_local(1);
+                op += 1;
+                break;
+            } 
+            case op_astore_2:
+            {
+                java_run_stack->top_frame()->stack_store_to_local(1);
+                op += 1;
+                break;
+            } 
             case op_aload:
             {
                 const u1 index = *(code + op + 1);
@@ -113,6 +129,11 @@ namespace mini_jvm
             case op_aload_0:
             {
                 java_run_stack->top_frame()->locals_load_to_stack(0);
+                break;
+            }
+            case op_aload_1:
+            {
+                java_run_stack->top_frame()->locals_load_to_stack(1);
                 break;
             }
             case op_invokespecial:
@@ -291,6 +312,11 @@ namespace mini_jvm
                 const char* class_name = kClass->constants()->symbol_at(class_index);
                 invokeNew(std::string(class_name), kClass);
                 op += 2;
+                break;
+            }
+            case op_ifnull:
+            {
+                
                 break;
             }
             case op_dup:

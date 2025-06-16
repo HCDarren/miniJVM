@@ -19,6 +19,12 @@ namespace mini_jvm
             _val[cp_index] = ((u8)signature_index << 16) | name_index;
         }
 
+        void interface_method_at_put(const u2 cp_index, const u2 name_index, const u2 signature_index)
+        {
+            _tag[cp_index] = JVM_CONSTANT_InterfaceMethodref;
+            _val[cp_index] = ((u8)signature_index << 16) | name_index;
+        }
+        
         void filed_at_put(const u2 cp_index, const u2 name_index, const u2 signature_index)
         {
             _tag[cp_index] = JVM_CONSTANT_Fieldref;
@@ -43,11 +49,27 @@ namespace mini_jvm
             _val[cp_index] = (u8)str;
         }
 
+        void long_at_put(const u2 cp_index, const u8 value) 
+        {
+            _tag[cp_index] = JVM_CONSTANT_Long;
+            _val[cp_index] = value;
+        }
+
         void name_and_type_at_put(const u2 cp_index, const u2 name_index, const u2 signature_index) {
             _tag[cp_index] = JVM_CONSTANT_NameAndType;
             _val[cp_index] = ((u8)signature_index << 16) | name_index;
         }
 
+         void method_handle_at_put(const u2 cp_index, const u2 name_index, const u2 signature_index) {
+            _tag[cp_index] = JVM_CONSTANT_MethodHandle;
+            _val[cp_index] = ((u8)signature_index << 16) | name_index;
+        }
+        
+        void invoke_dynamic_at_put(const u2 cp_index, const u2 name_index, const u2 signature_index) {
+            _tag[cp_index] = JVM_CONSTANT_InvokeDynamic;
+            _val[cp_index] = ((u8)signature_index << 16) | name_index;
+        }
+        
         // 获取
         u8 method_at(const u2 cp_index)
         {

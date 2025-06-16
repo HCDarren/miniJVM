@@ -33,8 +33,6 @@ namespace mini_jvm
         u2 flags = stream->get_u2();
         u2 this_class_index = stream->get_u2();
         u2 super_class_index = stream->get_u2();
-        u2 interfaces_length = stream->get_u2();
-        // 接口解析不写
         parse_interfaces(stream, kClass);
 
         parse_fileds(stream, kClass);
@@ -43,13 +41,19 @@ namespace mini_jvm
         return kClass;
     }
 
-    void ClassFileParser::parse_interfaces(ClassFileStream* stream, InstanceKClass* kClass) {
-        
+    void ClassFileParser::parse_interfaces(ClassFileStream *stream, InstanceKClass *kClass)
+    {
+        u2 interfaces_length = stream->get_u2();
+        for (size_t i = 0; i < interfaces_length; i++)
+        {
+            const u2 interfaces_cp_index = stream->get_u2();
+        }
     }
 
-    void ClassFileParser::parse_fileds(ClassFileStream* stream, InstanceKClass* kClass) {
+    void ClassFileParser::parse_fileds(ClassFileStream *stream, InstanceKClass *kClass)
+    {
         const u2 field_size = stream->get_u2();
-        FieldInfo* fields = new FieldInfo[field_size];
+        FieldInfo *fields = new FieldInfo[field_size];
         kClass->set_fields(fields);
         kClass->set_field_size(field_size);
         for (size_t i = 0; i < field_size; i++)
@@ -59,25 +63,27 @@ namespace mini_jvm
             const u2 signature_index = stream->get_u2();
             const u2 attribute_count = stream->get_u2();
             // 解析字段属性，不写
-            fields[i].set_flags(flags); 
-            fields[i].set_name_index(name_index); 
-            fields[i].set_signature_index(signature_index); 
+            fields[i].set_flags(flags);
+            fields[i].set_name_index(name_index);
+            fields[i].set_signature_index(signature_index);
             fields[i].set_attribute_count(attribute_count);
         }
     }
-            
-    void ClassFileParser::parse_methods(ClassFileStream* stream, InstanceKClass* kClass) {
+
+    void ClassFileParser::parse_methods(ClassFileStream *stream, InstanceKClass *kClass)
+    {
         const u2 method_size = stream->get_u2();
-        MethodInfo* methods = new MethodInfo[method_size];
+        MethodInfo *methods = new MethodInfo[method_size];
         kClass->set_methods(methods);
         kClass->set_method_size(method_size);
         for (size_t i = 0; i < method_size; i++)
         {
-            parse_method(stream, methods+i, kClass->constants());
+            parse_method(stream, methods + i, kClass->constants());
         }
     }
 
-    void ClassFileParser::parse_method(ClassFileStream* stream, MethodInfo* m, ConstantPool* cp) {
+    void ClassFileParser::parse_method(ClassFileStream *stream, MethodInfo *m, ConstantPool *cp)
+    {
         const u2 flags = stream->get_u2();
         const u2 name_index = stream->get_u2();
         const u2 signature_index = stream->get_u2();
@@ -86,7 +92,7 @@ namespace mini_jvm
         u2 max_stack;
         u2 max_locals;
         u4 code_length;
-        u1* code_start;
+        u1 *code_start;
         u2 exception_table_length;
 
         // 解析代码、异常表等信息，这个需要耐心，比较复杂一点
@@ -94,8 +100,9 @@ namespace mini_jvm
         {
             const u2 method_attribute_name_index = stream->get_u2();
             const u4 method_attribute_length = stream->get_u4();
-            const char* const method_attribute_name = cp->symbol_at(method_attribute_name_index);
-            if (strcmp(method_attribute_name, tag_code) == 0) {
+            const char *const method_attribute_name = cp->symbol_at(method_attribute_name_index);
+            if (strcmp(method_attribute_name, tag_code) == 0)
+            {
                 max_stack = stream->get_u2();
                 max_locals = stream->get_u2();
                 code_length = stream->get_u4();
@@ -107,11 +114,13 @@ namespace mini_jvm
                 {
                     const u2 code_attribute_name_index = stream->get_u2();
                     const u4 code_attribute_length = stream->get_u4();
-                    const char* const code_attribute_name = cp->symbol_at(code_attribute_name_index);
+                    const char *const code_attribute_name = cp->symbol_at(code_attribute_name_index);
                     // code 属性都不做，直接往后跳
                     stream->skip_u1(code_attribute_length);
                 }
-            } else if(strcmp(method_attribute_name, tag_exceptions) == 0) {
+            }
+            else if (strcmp(method_attribute_name, tag_exceptions) == 0)
+            {
                 // 后面异常再写，看有没有时间了
             }
         }
@@ -156,8 +165,13 @@ namespace mini_jvm
 
                 break;
             case JVM_CONSTANT_Long:
-
+            {
+                const u8 value = stream->get_u8();
+                cp->long_at_put(index, value);
+                // long 占两个，由于我们的实现问题，直接要加 1
+                index += 1;
                 break;
+            }
             case JVM_CONSTANT_Double:
 
                 break;
@@ -188,8 +202,12 @@ namespace mini_jvm
                 break;
             }
             case JVM_CONSTANT_InterfaceMethodref:
-
+            {
+                const u2 class_index = stream->get_u2();
+                const u2 signature_index = stream->get_u2();
+                cp->interface_method_at_put(index, class_index, signature_index);
                 break;
+            }
             case JVM_CONSTANT_NameAndType:
             {
                 const u2 name_index = stream->get_u2();
@@ -199,8 +217,12 @@ namespace mini_jvm
             }
             break;
             case JVM_CONSTANT_MethodHandle:
-
+            {
+                const u2 name_index = stream->get_u1();
+                const u2 signature_index = stream->get_u2();
+                cp->method_handle_at_put(index, name_index, signature_index);
                 break;
+            }
             case JVM_CONSTANT_MethodType:
 
                 break;
@@ -208,8 +230,12 @@ namespace mini_jvm
 
                 break;
             case JVM_CONSTANT_InvokeDynamic:
-
+            {
+                const u2 name_index = stream->get_u2();
+                const u2 signature_index = stream->get_u2();
+                cp->invoke_dynamic_at_put(index, name_index, signature_index);
                 break;
+            }
             case JVM_CONSTANT_Module:
 
                 break;

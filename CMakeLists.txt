@@ -11,7 +11,7 @@ add_compile_options(
         -g 
         -std=c++17
         #-DSTACK_DEBUG
-        #-DEXEC_INSTRUCT_DEBUG
+        -DEXEC_INSTRUCT_DEBUG
 )
 
 # 头文件搜索路径
