@@ -121,7 +121,12 @@ namespace mini_jvm
             }
             else if (strcmp(method_attribute_name, tag_exceptions) == 0)
             {
-                // 后面异常再写，看有没有时间了
+                // TODO: 后面异常再写，先跑起来
+                const u2 exception_numbers = stream->get_u2();
+                for (size_t i = 0; i < exception_numbers; i++)
+                {
+                     stream->get_u2();
+                }
             }
         }
 
@@ -155,18 +160,12 @@ namespace mini_jvm
                 cp->symbol_at_put(index, new_str);
                 break;
             }
-            case JVM_CONSTANT_Unicode:
-
-                break;
             case JVM_CONSTANT_Integer:
             {
                 const u4 value = stream->get_u4();
                 cp->int_at_put(index, value);
                 break;
             }
-            case JVM_CONSTANT_Float:
-
-                break;
             case JVM_CONSTANT_Long:
             {
                 const u8 value = stream->get_u8();
@@ -175,9 +174,6 @@ namespace mini_jvm
                 index += 1;
                 break;
             }
-            case JVM_CONSTANT_Double:
-
-                break;
             case JVM_CONSTANT_Class:
             {
                 const u2 name_index = stream->get_u2();
@@ -226,12 +222,6 @@ namespace mini_jvm
                 cp->method_handle_at_put(index, name_index, signature_index);
                 break;
             }
-            case JVM_CONSTANT_MethodType:
-
-                break;
-            case JVM_CONSTANT_Dynamic:
-
-                break;
             case JVM_CONSTANT_InvokeDynamic:
             {
                 const u2 name_index = stream->get_u2();
@@ -239,12 +229,6 @@ namespace mini_jvm
                 cp->invoke_dynamic_at_put(index, name_index, signature_index);
                 break;
             }
-            case JVM_CONSTANT_Module:
-
-                break;
-            case JVM_CONSTANT_Package:
-
-                break;
             default:
                 assert(false);
                 break;

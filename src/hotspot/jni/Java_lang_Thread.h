@@ -13,14 +13,14 @@ extern "C" {
  * Method:    start
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_DarrenThread_start(JNIEnv *, jobject);
+JNIEXPORT void JNICALL Java_lang_Thread_start(JNIEnv *, jobject);
 
 /*
  * Class:     DarrenThread
  * Method:    sleepNanos
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_DarrenThread_sleepNanos(JNIEnv *, jclass, jlong);
+JNIEXPORT void JNICALL Java_lang_Thread_sleepNanos(JNIEnv *, jclass, jlong);
 
 #ifdef __cplusplus
 }
@@ -28,7 +28,7 @@ JNIEXPORT void JNICALL Java_DarrenThread_sleepNanos(JNIEnv *, jclass, jlong);
 
 class InstanceKClass;
 
-class Java_native_DarrenThread {
+class Java_lang_Thread {
     public:
         static void register_natives(JNIEnv* env);
 };

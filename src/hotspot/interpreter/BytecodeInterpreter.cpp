@@ -8,7 +8,7 @@
 #include <iostream>
 #include <cassert>
 #include "jni/Java_io_PrintStream.h"
-#include "jni/Java_native_DarrenThread.h"
+#include "jni/Java_lang_Thread.h"
 #include "cpu/aarch64/AssemblerAarch64.hpp"
 #include "runtime/JavaRunStack.hpp"
 #include "runtime/JavaThread.hpp"
@@ -68,7 +68,7 @@ namespace mini_jvm
         java_run_stack = java_thread->run_java_statck();
         // 注册 navtive 层的调用函数
         Java_io_PrintStream::register_natives(_jniEnv);
-        Java_native_DarrenThread::register_natives(_jniEnv);
+        Java_lang_Thread::register_natives(_jniEnv);
     }
 
     void BytecodeInterpreter::invoke(const MethodInfo *method, InstanceKClass *kClass)
@@ -437,6 +437,7 @@ namespace mini_jvm
     void BytecodeInterpreter::invokeNativeMethod(const MethodInfo *method, InstanceKClass *kClass)
     {
         address native_function = method->native_function();
+        assert(native_function != NULL);
         // native 方法有了，怎么执行呢？尼玛, 找了一圈 jdk 源码也看不懂
         // 看样子只能用汇编调用的那一套来搞了，或者自己写一套规则来搞，还是突破一下用汇编吧
         java_run_stack->top_frame()->print_stack_frame();

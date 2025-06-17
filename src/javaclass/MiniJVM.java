@@ -1,4 +1,4 @@
-public class MiniJVM implements DarrenRunnable{
+public class MiniJVM implements Runnable{
 
     private static final Student student = new Student();
 
@@ -11,7 +11,7 @@ public class MiniJVM implements DarrenRunnable{
         }
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception{
         /*int a = 12;
         int b = 13;
         int sum = sum(a, b);
@@ -23,11 +23,11 @@ public class MiniJVM implements DarrenRunnable{
         int age = stu.getAge();
         Print.println(age);*/
 
-        DarrenThread thread1 = new DarrenThread(new MiniJVM());
-        DarrenThread thread2 = new DarrenThread(new MiniJVM());
+        Thread thread1 = new Thread(new MiniJVM());
+        Thread thread2 = new Thread(new MiniJVM());
         thread1.start();
         thread2.start();
-        DarrenThread.sleepNanos(5000);
+        Thread.sleep(5000);
         Print.println(student.getAge());
     }
 

@@ -297,29 +297,29 @@ hotspot/jni/Java_io_PrintStream.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/Java_io_PrintStream.cpp.s
 .PHONY : hotspot/jni/Java_io_PrintStream.cpp.s
 
-hotspot/jni/Java_native_DarrenThread.o: hotspot/jni/Java_native_DarrenThread.cpp.o
-.PHONY : hotspot/jni/Java_native_DarrenThread.o
+hotspot/jni/Java_lang_Thread.o: hotspot/jni/Java_lang_Thread.cpp.o
+.PHONY : hotspot/jni/Java_lang_Thread.o
 
 # target to build an object file
-hotspot/jni/Java_native_DarrenThread.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/Java_native_DarrenThread.cpp.o
-.PHONY : hotspot/jni/Java_native_DarrenThread.cpp.o
+hotspot/jni/Java_lang_Thread.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/Java_lang_Thread.cpp.o
+.PHONY : hotspot/jni/Java_lang_Thread.cpp.o
 
-hotspot/jni/Java_native_DarrenThread.i: hotspot/jni/Java_native_DarrenThread.cpp.i
-.PHONY : hotspot/jni/Java_native_DarrenThread.i
+hotspot/jni/Java_lang_Thread.i: hotspot/jni/Java_lang_Thread.cpp.i
+.PHONY : hotspot/jni/Java_lang_Thread.i
 
 # target to preprocess a source file
-hotspot/jni/Java_native_DarrenThread.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/Java_native_DarrenThread.cpp.i
-.PHONY : hotspot/jni/Java_native_DarrenThread.cpp.i
+hotspot/jni/Java_lang_Thread.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/Java_lang_Thread.cpp.i
+.PHONY : hotspot/jni/Java_lang_Thread.cpp.i
 
-hotspot/jni/Java_native_DarrenThread.s: hotspot/jni/Java_native_DarrenThread.cpp.s
-.PHONY : hotspot/jni/Java_native_DarrenThread.s
+hotspot/jni/Java_lang_Thread.s: hotspot/jni/Java_lang_Thread.cpp.s
+.PHONY : hotspot/jni/Java_lang_Thread.s
 
 # target to generate assembly for a file
-hotspot/jni/Java_native_DarrenThread.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/Java_native_DarrenThread.cpp.s
-.PHONY : hotspot/jni/Java_native_DarrenThread.cpp.s
+hotspot/jni/Java_lang_Thread.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/jni/Java_lang_Thread.cpp.s
+.PHONY : hotspot/jni/Java_lang_Thread.cpp.s
 
 hotspot/oops/ConstantPool.o: hotspot/oops/ConstantPool.cpp.o
 .PHONY : hotspot/oops/ConstantPool.o
@@ -735,9 +735,9 @@ help:
 	@echo "... hotspot/jni/Java_io_PrintStream.o"
 	@echo "... hotspot/jni/Java_io_PrintStream.i"
 	@echo "... hotspot/jni/Java_io_PrintStream.s"
-	@echo "... hotspot/jni/Java_native_DarrenThread.o"
-	@echo "... hotspot/jni/Java_native_DarrenThread.i"
-	@echo "... hotspot/jni/Java_native_DarrenThread.s"
+	@echo "... hotspot/jni/Java_lang_Thread.o"
+	@echo "... hotspot/jni/Java_lang_Thread.i"
+	@echo "... hotspot/jni/Java_lang_Thread.s"
 	@echo "... hotspot/oops/ConstantPool.o"
 	@echo "... hotspot/oops/ConstantPool.i"
 	@echo "... hotspot/oops/ConstantPool.s"

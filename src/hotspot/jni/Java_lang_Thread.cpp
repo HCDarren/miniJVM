@@ -1,4 +1,4 @@
-#include "java_native_DarrenThread.h"
+#include "jni/Java_lang_Thread.h"
 #include <iostream>
 #include "oops/InstanceKClass.hpp"
 #include "classfile/ClassLoader.hpp"
@@ -27,18 +27,18 @@ namespace mini_jvm
         return (void *)0; // 返回值可被 pthread_join 获取
     }
 
-    static JNINativeMethod DarrenThread_methods[] = {
-        {(char *)"start", (char *)"()V", (void *)Java_DarrenThread_start},
-        {(char *)"sleepNanos", (char *)"(J)V", (void *)Java_DarrenThread_sleepNanos},
+    static JNINativeMethod Thread_methods[] = {
+        {(char *)"start", (char *)"()V", (void *)Java_lang_Thread_start},
+        {(char *)"sleep", (char *)"(J)V", (void *)Java_lang_Thread_sleepNanos},
     };
 
-    void Java_native_DarrenThread::register_natives(JNIEnv *env)
+    void Java_lang_Thread::register_natives(JNIEnv *env)
     {
-        InstanceKClass *k_Class = ClassLoader::load_class("DarrenThread");
-        env->RegisterNatives((jclass)k_Class, DarrenThread_methods, sizeof(DarrenThread_methods) / sizeof(JNINativeMethod));
+        jclass j_class = env->FindClass("java/lang/Thread");
+        env->RegisterNatives(j_class, Thread_methods, sizeof(Thread_methods) / sizeof(JNINativeMethod));
     }
 
-    JNIEXPORT void JNICALL Java_DarrenThread_start(JNIEnv *jniEnv, jobject jobj)
+    JNIEXPORT void JNICALL Java_lang_Thread_start(JNIEnv *jniEnv, jobject jobj)
     {
         // 创建新的线程出来
         pthread_t tid;
@@ -48,7 +48,7 @@ namespace mini_jvm
         }
     }
 
-    JNIEXPORT void JNICALL Java_DarrenThread_sleepNanos(JNIEnv *, jclass, jlong sleepNanos)
+    JNIEXPORT void JNICALL Java_lang_Thread_sleepNanos(JNIEnv *, jclass, jlong sleepNanos)
     {
         usleep(sleepNanos * 1000);
     }
