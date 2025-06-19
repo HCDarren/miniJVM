@@ -5,5 +5,6 @@
 #define tag_exceptions "Exceptions"
 #define tag_line_number_table "LineNumberTable"
 #define tag_method_parameters "MethodParameters"
+#define tag_stack_map_table "StackMapTable"
 
 #endif

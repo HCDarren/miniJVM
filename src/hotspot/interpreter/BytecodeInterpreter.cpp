@@ -58,6 +58,8 @@
 #define op_invokestatic 184
 #define invokeinterface 185
 #define op_new 187
+#define op_monitorenter 194
+#define op_monitorexit 195
 #define op_ifnull 198
 
 namespace mini_jvm
@@ -398,6 +400,16 @@ namespace mini_jvm
                 const char* class_name = kClass->constants()->symbol_at(class_index);
                 invokeNew(std::string(class_name), kClass);
                 op += 2;
+                break;
+            }
+            case op_monitorenter:
+            {
+                Oop* obj = (Oop*)java_run_stack->top_frame()->pop_value_from_stack()->value();
+                break;
+            }
+            case op_monitorexit:
+            {
+                Oop* obj = (Oop*)java_run_stack->top_frame()->pop_value_from_stack()->value();
                 break;
             }
             case op_ifnull:

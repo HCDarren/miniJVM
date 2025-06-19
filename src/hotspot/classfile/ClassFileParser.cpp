@@ -109,6 +109,16 @@ namespace mini_jvm
                 code_start = stream->current();
                 stream->skip_u1(code_length);
                 exception_table_length = stream->get_u2();
+
+                for (size_t i = 0; i < exception_table_length; i++)
+                {
+                    // TODO: 后面再写
+                    stream->get_u2();
+                    stream->get_u2();
+                    stream->get_u2();
+                    stream->get_u2();
+                }
+
                 u2 code_attributes_count = stream->get_u2();
                 while (code_attributes_count--)
                 {

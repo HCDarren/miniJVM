@@ -4,10 +4,12 @@ public class MiniJVM implements Runnable{
 
     @Override
     public void run() {
-        for(int i = 0; i < 10000; i++) {
-            int age = student.getAge();
-            age += 1;
-            student.setAge(age);
+        synchronized(student) {
+            for(int i = 0; i < 10000; i++) {
+                int age = student.getAge();
+                age += 1;
+                student.setAge(age);
+            }
         }
     }
 
