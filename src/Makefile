@@ -513,6 +513,78 @@ hotspot/oops/Oop.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/oops/Oop.cpp.s
 .PHONY : hotspot/oops/Oop.cpp.s
 
+hotspot/os/posix/ThreadLocalStorage_posix.o: hotspot/os/posix/ThreadLocalStorage_posix.cpp.o
+.PHONY : hotspot/os/posix/ThreadLocalStorage_posix.o
+
+# target to build an object file
+hotspot/os/posix/ThreadLocalStorage_posix.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/os/posix/ThreadLocalStorage_posix.cpp.o
+.PHONY : hotspot/os/posix/ThreadLocalStorage_posix.cpp.o
+
+hotspot/os/posix/ThreadLocalStorage_posix.i: hotspot/os/posix/ThreadLocalStorage_posix.cpp.i
+.PHONY : hotspot/os/posix/ThreadLocalStorage_posix.i
+
+# target to preprocess a source file
+hotspot/os/posix/ThreadLocalStorage_posix.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/os/posix/ThreadLocalStorage_posix.cpp.i
+.PHONY : hotspot/os/posix/ThreadLocalStorage_posix.cpp.i
+
+hotspot/os/posix/ThreadLocalStorage_posix.s: hotspot/os/posix/ThreadLocalStorage_posix.cpp.s
+.PHONY : hotspot/os/posix/ThreadLocalStorage_posix.s
+
+# target to generate assembly for a file
+hotspot/os/posix/ThreadLocalStorage_posix.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/os/posix/ThreadLocalStorage_posix.cpp.s
+.PHONY : hotspot/os/posix/ThreadLocalStorage_posix.cpp.s
+
+hotspot/runtime/Atomic.o: hotspot/runtime/Atomic.cpp.o
+.PHONY : hotspot/runtime/Atomic.o
+
+# target to build an object file
+hotspot/runtime/Atomic.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/Atomic.cpp.o
+.PHONY : hotspot/runtime/Atomic.cpp.o
+
+hotspot/runtime/Atomic.i: hotspot/runtime/Atomic.cpp.i
+.PHONY : hotspot/runtime/Atomic.i
+
+# target to preprocess a source file
+hotspot/runtime/Atomic.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/Atomic.cpp.i
+.PHONY : hotspot/runtime/Atomic.cpp.i
+
+hotspot/runtime/Atomic.s: hotspot/runtime/Atomic.cpp.s
+.PHONY : hotspot/runtime/Atomic.s
+
+# target to generate assembly for a file
+hotspot/runtime/Atomic.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/Atomic.cpp.s
+.PHONY : hotspot/runtime/Atomic.cpp.s
+
+hotspot/runtime/BasicLock.o: hotspot/runtime/BasicLock.cpp.o
+.PHONY : hotspot/runtime/BasicLock.o
+
+# target to build an object file
+hotspot/runtime/BasicLock.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/BasicLock.cpp.o
+.PHONY : hotspot/runtime/BasicLock.cpp.o
+
+hotspot/runtime/BasicLock.i: hotspot/runtime/BasicLock.cpp.i
+.PHONY : hotspot/runtime/BasicLock.i
+
+# target to preprocess a source file
+hotspot/runtime/BasicLock.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/BasicLock.cpp.i
+.PHONY : hotspot/runtime/BasicLock.cpp.i
+
+hotspot/runtime/BasicLock.s: hotspot/runtime/BasicLock.cpp.s
+.PHONY : hotspot/runtime/BasicLock.s
+
+# target to generate assembly for a file
+hotspot/runtime/BasicLock.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/BasicLock.cpp.s
+.PHONY : hotspot/runtime/BasicLock.cpp.s
+
 hotspot/runtime/JavaRunStack.o: hotspot/runtime/JavaRunStack.cpp.o
 .PHONY : hotspot/runtime/JavaRunStack.o
 
@@ -560,6 +632,30 @@ hotspot/runtime/JavaThread.s: hotspot/runtime/JavaThread.cpp.s
 hotspot/runtime/JavaThread.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/JavaThread.cpp.s
 .PHONY : hotspot/runtime/JavaThread.cpp.s
+
+hotspot/runtime/ObjectSynchronizer.o: hotspot/runtime/ObjectSynchronizer.cpp.o
+.PHONY : hotspot/runtime/ObjectSynchronizer.o
+
+# target to build an object file
+hotspot/runtime/ObjectSynchronizer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/ObjectSynchronizer.cpp.o
+.PHONY : hotspot/runtime/ObjectSynchronizer.cpp.o
+
+hotspot/runtime/ObjectSynchronizer.i: hotspot/runtime/ObjectSynchronizer.cpp.i
+.PHONY : hotspot/runtime/ObjectSynchronizer.i
+
+# target to preprocess a source file
+hotspot/runtime/ObjectSynchronizer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/ObjectSynchronizer.cpp.i
+.PHONY : hotspot/runtime/ObjectSynchronizer.cpp.i
+
+hotspot/runtime/ObjectSynchronizer.s: hotspot/runtime/ObjectSynchronizer.cpp.s
+.PHONY : hotspot/runtime/ObjectSynchronizer.s
+
+# target to generate assembly for a file
+hotspot/runtime/ObjectSynchronizer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/ObjectSynchronizer.cpp.s
+.PHONY : hotspot/runtime/ObjectSynchronizer.cpp.s
 
 hotspot/runtime/Signature.o: hotspot/runtime/Signature.cpp.o
 .PHONY : hotspot/runtime/Signature.o
@@ -632,30 +728,6 @@ hotspot/runtime/StackValue.s: hotspot/runtime/StackValue.cpp.s
 hotspot/runtime/StackValue.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/StackValue.cpp.s
 .PHONY : hotspot/runtime/StackValue.cpp.s
-
-hotspot/runtime/Thread.o: hotspot/runtime/Thread.cpp.o
-.PHONY : hotspot/runtime/Thread.o
-
-# target to build an object file
-hotspot/runtime/Thread.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/Thread.cpp.o
-.PHONY : hotspot/runtime/Thread.cpp.o
-
-hotspot/runtime/Thread.i: hotspot/runtime/Thread.cpp.i
-.PHONY : hotspot/runtime/Thread.i
-
-# target to preprocess a source file
-hotspot/runtime/Thread.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/Thread.cpp.i
-.PHONY : hotspot/runtime/Thread.cpp.i
-
-hotspot/runtime/Thread.s: hotspot/runtime/Thread.cpp.s
-.PHONY : hotspot/runtime/Thread.s
-
-# target to generate assembly for a file
-hotspot/runtime/Thread.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/Thread.cpp.s
-.PHONY : hotspot/runtime/Thread.cpp.s
 
 main.o: main.cpp.o
 .PHONY : main.o
@@ -762,12 +834,24 @@ help:
 	@echo "... hotspot/oops/Oop.o"
 	@echo "... hotspot/oops/Oop.i"
 	@echo "... hotspot/oops/Oop.s"
+	@echo "... hotspot/os/posix/ThreadLocalStorage_posix.o"
+	@echo "... hotspot/os/posix/ThreadLocalStorage_posix.i"
+	@echo "... hotspot/os/posix/ThreadLocalStorage_posix.s"
+	@echo "... hotspot/runtime/Atomic.o"
+	@echo "... hotspot/runtime/Atomic.i"
+	@echo "... hotspot/runtime/Atomic.s"
+	@echo "... hotspot/runtime/BasicLock.o"
+	@echo "... hotspot/runtime/BasicLock.i"
+	@echo "... hotspot/runtime/BasicLock.s"
 	@echo "... hotspot/runtime/JavaRunStack.o"
 	@echo "... hotspot/runtime/JavaRunStack.i"
 	@echo "... hotspot/runtime/JavaRunStack.s"
 	@echo "... hotspot/runtime/JavaThread.o"
 	@echo "... hotspot/runtime/JavaThread.i"
 	@echo "... hotspot/runtime/JavaThread.s"
+	@echo "... hotspot/runtime/ObjectSynchronizer.o"
+	@echo "... hotspot/runtime/ObjectSynchronizer.i"
+	@echo "... hotspot/runtime/ObjectSynchronizer.s"
 	@echo "... hotspot/runtime/Signature.o"
 	@echo "... hotspot/runtime/Signature.i"
 	@echo "... hotspot/runtime/Signature.s"
@@ -777,9 +861,6 @@ help:
 	@echo "... hotspot/runtime/StackValue.o"
 	@echo "... hotspot/runtime/StackValue.i"
 	@echo "... hotspot/runtime/StackValue.s"
-	@echo "... hotspot/runtime/Thread.o"
-	@echo "... hotspot/runtime/Thread.i"
-	@echo "... hotspot/runtime/Thread.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

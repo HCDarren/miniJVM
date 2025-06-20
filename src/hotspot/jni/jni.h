@@ -65,8 +65,6 @@ namespace mini_jvm
 
     class JavaVM
     {
-        private:
-            std::map<pthread_t, JavaThread*> _thread_infos;
         public:
             JavaThread* current_thread();
             static JavaVM* current();

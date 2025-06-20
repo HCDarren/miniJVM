@@ -2,7 +2,9 @@
 #define DAREEN_MINIJVM_RUNTIME_STACKFRAME
 #include "utilities/GlobalDefinitions.hpp"
 #include "runtime/StackValue.hpp"
+#include "runtime/BasicLock.hpp"
 #include "oops/Oop.hpp"
+#include <stack>
 
 namespace mini_jvm
 {
@@ -37,6 +39,9 @@ namespace mini_jvm
 
         StackValue* get_value_by(int location);
 
+        BasicLock* create_basicLock();
+        BasicLock* remove_basicLock();
+
     private:
         // 上一个栈帧，_sender 哪个方法调用的
         StackFrame* _sender;
@@ -45,6 +50,7 @@ namespace mini_jvm
         int _local_slots_size;
         int _max_stack_size;
         int _stack_top_location;
+        std::stack<BasicLock*> locks;
     };
 } // namespace name
 

@@ -16,6 +16,8 @@
 #include "runtime/Signature.hpp"
 #include "oops/Oop.hpp"
 #include "jni/jni.h"
+#include "runtime/ObjectSynchronizer.hpp"
+#include "runtime/BasicLock.hpp"
 
 #define op_iconst_0 3
 #define op_iconst_2 5
@@ -404,12 +406,12 @@ namespace mini_jvm
             }
             case op_monitorenter:
             {
-                Oop* obj = (Oop*)java_run_stack->top_frame()->pop_value_from_stack()->value();
+                monitor_enter();
                 break;
             }
             case op_monitorexit:
             {
-                Oop* obj = (Oop*)java_run_stack->top_frame()->pop_value_from_stack()->value();
+                monitor_exit();
                 break;
             }
             case op_ifnull:
@@ -546,6 +548,23 @@ namespace mini_jvm
         const char *target_signature_name_str = kClass->constants()->symbol_at(target_signature_index);
         MethodInfo *method = newClass->findMethod(target_method_name_str, target_signature_name_str);
         invoke(method, newClass);
+    }
+
+    void BytecodeInterpreter::monitor_enter() {
+        // 这里要考虑的就比较多了，无锁->偏向锁->轻量级锁->重量级锁
+        // 要看下我的操作系统实现：https://github.com/HCDarren/miniOS 
+        // 才能彻底理解锁，才能知道 java 为啥要这么做，剩下的就是看我们怎么实现了，可以有更优实现
+        Oop* obj = (Oop*)java_run_stack->top_frame()->pop_value_from_stack()->value();
+        JavaThread* current_thread = JavaThread::current();
+        BasicLock* basic_lock = java_run_stack->top_frame()->create_basicLock();
+        ObjectSynchronizer::enter(obj, basic_lock, current_thread);
+    }
+
+    void BytecodeInterpreter::monitor_exit() {
+        Oop* obj = (Oop*)java_run_stack->top_frame()->pop_value_from_stack()->value();
+        JavaThread* current_thread = JavaThread::current();
+        BasicLock* basic_lock = java_run_stack->top_frame()->remove_basicLock();
+        ObjectSynchronizer::exit(obj, basic_lock, current_thread);
     }
 
     BytecodeInterpreter::~BytecodeInterpreter()

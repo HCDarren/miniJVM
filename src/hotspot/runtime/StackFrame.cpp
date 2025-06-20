@@ -95,6 +95,19 @@ namespace mini_jvm
         dup_stack_value->_type = top_stack_value->_type;
         dup_stack_value->_integer_value = top_stack_value->_integer_value;
     }
+
+    // TODO: 现在根本都不是在栈上开辟数据，后面还要改
+    BasicLock* StackFrame::create_basicLock() {
+        BasicLock* basic_lock = new BasicLock();
+        locks.push(basic_lock);
+        return basic_lock;
+    }
+
+    BasicLock* StackFrame::remove_basicLock() {
+        BasicLock* basic_lock = locks.top();
+        locks.pop();
+        return basic_lock;
+    }
     
     void StackFrame::print_stack_frame() {
 #if STACK_DEBUG

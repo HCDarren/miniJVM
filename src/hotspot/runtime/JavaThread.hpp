@@ -1,7 +1,6 @@
 #ifndef DAREEN_MINIJVM_OOPS_JAVATHREAD
 #define DAREEN_MINIJVM_OOPS_JAVATHREAD
 
-#include "runtime/Thread.hpp"
 #include <pthread.h>
 
 namespace mini_jvm
@@ -12,7 +11,7 @@ namespace mini_jvm
     class JNIEnv;
     class BytecodeInterpreter;
 
-    class JavaThread : public Thread
+    class JavaThread
     {
     public:
         JavaThread();

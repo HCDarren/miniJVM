@@ -1,4 +1,4 @@
-#include "runtime/Thread.hpp"
+#include "runtime/Atomic.hpp"
 namespace mini_jvm
 {
    

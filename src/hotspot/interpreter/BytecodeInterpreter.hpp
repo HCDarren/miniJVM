@@ -25,6 +25,8 @@ namespace mini_jvm
         void invokespecialMethod(const u1 class_index, const u1 name_and_type_index, InstanceKClass* kClass);
         void invokeStaticMethod(const u1 class_index, const u1 name_and_type_index, InstanceKClass* kClass);
         void invokeNew(const std::string &class_name, InstanceKClass *kClass);
+        void monitor_enter();
+        void monitor_exit();
     public:
         BytecodeInterpreter(JavaThread *java_thread);
         ~BytecodeInterpreter();
