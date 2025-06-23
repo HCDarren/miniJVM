@@ -41,7 +41,7 @@ namespace mini_jvm
 
         BasicLock* create_basicLock();
         BasicLock* remove_basicLock();
-
+        BasicLock* top_basicLock();
     private:
         // 上一个栈帧，_sender 哪个方法调用的
         StackFrame* _sender;

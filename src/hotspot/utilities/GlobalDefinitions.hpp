@@ -59,4 +59,33 @@ enum BasicType : u1
     T_ILLEGAL = 99
 };
 
+const int LogBytesPerShort   = 1;
+const int LogBytesPerInt     = 2;
+#ifdef _LP64
+constexpr int LogBytesPerWord    = 3;
+#else
+constexpr int LogBytesPerWord    = 2;
+#endif
+const int LogBytesPerLong    = 3;
+
+constexpr int LogBitsPerByte     = 3;
+
+const int LogBitsPerShort    = LogBitsPerByte + LogBytesPerShort;
+const int LogBitsPerInt      = LogBitsPerByte + LogBytesPerInt;
+constexpr int LogBitsPerWord     = LogBitsPerByte + LogBytesPerWord;
+const int LogBitsPerLong     = LogBitsPerByte + LogBytesPerLong;
+constexpr int BitsPerWord        = 1 << LogBitsPerWord;
+
+const intptr_t OneBit     =  1; // only right_most bit set in a word
+
+#define nth_bit(n)        (((n) >= BitsPerWord) ? 0 : (OneBit << (n)))
+#define right_n_bits(n)   (nth_bit(n) - 1)
+
+// bit-operations using a mask m
+inline void   set_bits    (intptr_t& x, intptr_t m) { x |= m; }
+inline void clear_bits    (intptr_t& x, intptr_t m) { x &= ~m; }
+inline intptr_t mask_bits      (intptr_t  x, intptr_t m) { return x & m; }
+inline bool mask_bits_are_true (intptr_t flags, intptr_t mask) { return (flags & mask) == mask; }
+
+
 #endif

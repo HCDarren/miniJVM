@@ -1,11 +1,11 @@
-public class MiniJVM implements Runnable{
+public class MiniJVM implements Runnable {
 
     private static final Student student = new Student();
 
     @Override
     public void run() {
-        synchronized(student) {
-            for(int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 10000; i++) {
+            synchronized (student) {
                 int age = student.getAge();
                 age += 1;
                 student.setAge(age);
@@ -13,23 +13,25 @@ public class MiniJVM implements Runnable{
         }
     }
 
-    public static void main(String[] args) throws Exception{
-        /*int a = 12;
-        int b = 13;
-        int sum = sum(a, b);
-        Print.println(sum);
-
-        Student stu = new Student();
-        stu.setAge(30);
-        stu.printAge();
-        int age = stu.getAge();
-        Print.println(age);*/
+    public static void main(String[] args) throws Exception {
+        /*
+         * int a = 12;
+         * int b = 13;
+         * int sum = sum(a, b);
+         * Print.println(sum);
+         * 
+         * Student stu = new Student();
+         * stu.setAge(30);
+         * stu.printAge();
+         * int age = stu.getAge();
+         * Print.println(age);
+         */
 
         Thread thread1 = new Thread(new MiniJVM());
         Thread thread2 = new Thread(new MiniJVM());
         thread1.start();
         thread2.start();
-        Thread.sleep(5000);
+        Thread.sleep(500000);
         Print.println(student.getAge());
     }
 

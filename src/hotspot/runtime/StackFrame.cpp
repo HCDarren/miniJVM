@@ -108,6 +108,11 @@ namespace mini_jvm
         locks.pop();
         return basic_lock;
     }
+
+    BasicLock* StackFrame::top_basicLock() {
+        BasicLock* basic_lock = locks.top();
+        return basic_lock;
+    }
     
     void StackFrame::print_stack_frame() {
 #if STACK_DEBUG

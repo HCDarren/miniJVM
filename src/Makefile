@@ -537,30 +537,6 @@ hotspot/os/posix/ThreadLocalStorage_posix.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/os/posix/ThreadLocalStorage_posix.cpp.s
 .PHONY : hotspot/os/posix/ThreadLocalStorage_posix.cpp.s
 
-hotspot/runtime/Atomic.o: hotspot/runtime/Atomic.cpp.o
-.PHONY : hotspot/runtime/Atomic.o
-
-# target to build an object file
-hotspot/runtime/Atomic.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/Atomic.cpp.o
-.PHONY : hotspot/runtime/Atomic.cpp.o
-
-hotspot/runtime/Atomic.i: hotspot/runtime/Atomic.cpp.i
-.PHONY : hotspot/runtime/Atomic.i
-
-# target to preprocess a source file
-hotspot/runtime/Atomic.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/Atomic.cpp.i
-.PHONY : hotspot/runtime/Atomic.cpp.i
-
-hotspot/runtime/Atomic.s: hotspot/runtime/Atomic.cpp.s
-.PHONY : hotspot/runtime/Atomic.s
-
-# target to generate assembly for a file
-hotspot/runtime/Atomic.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/Atomic.cpp.s
-.PHONY : hotspot/runtime/Atomic.cpp.s
-
 hotspot/runtime/BasicLock.o: hotspot/runtime/BasicLock.cpp.o
 .PHONY : hotspot/runtime/BasicLock.o
 
@@ -837,9 +813,6 @@ help:
 	@echo "... hotspot/os/posix/ThreadLocalStorage_posix.o"
 	@echo "... hotspot/os/posix/ThreadLocalStorage_posix.i"
 	@echo "... hotspot/os/posix/ThreadLocalStorage_posix.s"
-	@echo "... hotspot/runtime/Atomic.o"
-	@echo "... hotspot/runtime/Atomic.i"
-	@echo "... hotspot/runtime/Atomic.s"
 	@echo "... hotspot/runtime/BasicLock.o"
 	@echo "... hotspot/runtime/BasicLock.i"
 	@echo "... hotspot/runtime/BasicLock.s"

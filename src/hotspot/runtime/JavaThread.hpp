@@ -2,6 +2,7 @@
 #define DAREEN_MINIJVM_OOPS_JAVATHREAD
 
 #include <pthread.h>
+#include "runtime/StackFrame.hpp"
 
 namespace mini_jvm
 {
@@ -30,6 +31,9 @@ namespace mini_jvm
         BytecodeInterpreter* interpreter() {
             return _interpreter;
         }
+
+        bool is_lock_owned(address adr);
+
     private:
         JavaRunStack* _run_java_statck;
         JNIEnv* _jniEnv;

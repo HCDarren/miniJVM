@@ -48,5 +48,9 @@ namespace mini_jvm
     InstanceKClass* Oop::metadata_class() {
         return this->_metadata;
     }
+
+    MarkWord Oop::mark() {
+        return _make_word;
+    }
     
 } // namespace mini_jvm
