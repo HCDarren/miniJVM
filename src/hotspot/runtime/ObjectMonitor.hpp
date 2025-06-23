@@ -3,7 +3,7 @@
 
 #include <atomic>
 #include "runtime/JavaThread.hpp"
-
+#include "hotspot/utilities/GlobalDefinitions.hpp"
 
 namespace mini_jvm
 {
@@ -15,19 +15,37 @@ namespace mini_jvm
     class BasicLock;
     class MarkWord;
 
+    class ObjectWaiter {
+    public:
+        enum TStates : uint8_t { TS_UNDEF, TS_READY, TS_RUN, TS_WAIT, TS_ENTER };
+        ObjectWaiter* volatile _next;
+        ObjectWaiter* volatile _prev;
+        JavaThread*     _thread;
+        ObjectWaiter(JavaThread* thread) {
+            _thread = thread;
+        }
+    };
+
     class ObjectMonitor
     {
     private:
         std::atomic<uintptr_t> _metadata;
         std::atomic<int64_t> _owner;
         std::atomic<BasicLock*> _stack_locker;
-
+        volatile intx _recursions;
+        std::atomic<ObjectWaiter*> _entry_list; 
+    private:
+        bool try_enter(JavaThread *current);
+        bool try_spin(JavaThread *current);
+        
     public:
         ObjectMonitor(Oop* oop);
 
         void set_anonymous_owner() {
             set_owner_from_raw(NO_OWNER, ANONYMOUS_OWNER);
         }
+
+        bool try_lock_or_add_to_entry_list(JavaThread *current, ObjectWaiter *node);
 
         void set_owner(JavaThread* thread) { set_owner_from(NO_OWNER, thread); }
 
@@ -56,10 +74,17 @@ namespace mini_jvm
             _owner.store(new_value);
         }
 
-        int64_t owner_id_from(JavaThread* thread);
+        inline int64_t try_set_owner_from_raw(int64_t old_value, int64_t new_value) {
+            int64_t value = _owner.compare_exchange_strong(old_value, new_value);
+            return value;
+        }
+
+        inline int64_t try_set_owner_from(int64_t old_value, JavaThread* current) {
+            return try_set_owner_from_raw(old_value, (int64_t)current);
+        }
 
         inline void set_owner_from(int64_t old_value, JavaThread* current) {
-            set_owner_from_raw(old_value, owner_id_from(current));
+            set_owner_from_raw(old_value, (int64_t)current);
         }
 
         void set_owner_from_anonymous(JavaThread* owner) {

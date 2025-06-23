@@ -18,6 +18,9 @@ typedef julong u8;
 typedef unsigned char u_char;
 typedef u_char *address;
 
+typedef intptr_t  intx;
+typedef uintptr_t uintx;
+
 enum {
     JVM_T_BOOLEAN = 4,
     JVM_T_CHAR    = 5,
