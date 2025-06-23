@@ -1,9 +1,10 @@
 #ifndef DAREEN_MINIJVM_RUNTIME_BASICLOCK
 #define DAREEN_MINIJVM_RUNTIME_BASICLOCK
-#include "oops/Oop.hpp"
+#include <cstdint>
 
 namespace mini_jvm
 {
+    class MarkWord;
     class BasicLock
     {
     private:
@@ -13,13 +14,9 @@ namespace mini_jvm
 
         }
 
-        inline MarkWord displaced_header() const {
-            return MarkWord(_metadata);
-        }
+        MarkWord displaced_header() const;
 
-        inline void set_displaced_header(MarkWord header) {
-           _metadata = header.value();
-        }
+        void set_displaced_header(MarkWord header);
     };
 } // namespace name
 

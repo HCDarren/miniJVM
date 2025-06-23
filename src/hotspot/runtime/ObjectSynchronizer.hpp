@@ -7,11 +7,13 @@
 
 namespace mini_jvm
 {
+    class ObjectMonitor;
     class ObjectSynchronizer : AllStatic
     {
     public:
         static void enter(Oop *obj, BasicLock *lock, JavaThread *current);
         static void exit(Oop *obj, BasicLock *lock, JavaThread *current);
+        static ObjectMonitor* inflate(JavaThread* current, Oop* obj);
     };
 } // namespace name
 

@@ -3,11 +3,11 @@
 #include "utilities/GlobalDefinitions.hpp"
 #include "runtime/StackValue.hpp"
 #include "runtime/BasicLock.hpp"
-#include "oops/Oop.hpp"
 #include <stack>
 
 namespace mini_jvm
 {
+    class Oop;
     class StackFrame
     {
     friend class JavaRunStack;

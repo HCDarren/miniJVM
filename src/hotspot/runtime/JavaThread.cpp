@@ -19,6 +19,7 @@ namespace mini_jvm
         _run_java_statck = new JavaRunStack();
         _jniEnv = new JNIEnv();
         _interpreter = new BytecodeInterpreter(this);
+        _ParkEvent = new PlatformEvent();
     }
 
     bool JavaThread::is_lock_owned(address adr)

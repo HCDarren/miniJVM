@@ -537,6 +537,30 @@ hotspot/os/posix/ThreadLocalStorage_posix.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/os/posix/ThreadLocalStorage_posix.cpp.s
 .PHONY : hotspot/os/posix/ThreadLocalStorage_posix.cpp.s
 
+hotspot/os/posix/park_posix.o: hotspot/os/posix/park_posix.cpp.o
+.PHONY : hotspot/os/posix/park_posix.o
+
+# target to build an object file
+hotspot/os/posix/park_posix.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/os/posix/park_posix.cpp.o
+.PHONY : hotspot/os/posix/park_posix.cpp.o
+
+hotspot/os/posix/park_posix.i: hotspot/os/posix/park_posix.cpp.i
+.PHONY : hotspot/os/posix/park_posix.i
+
+# target to preprocess a source file
+hotspot/os/posix/park_posix.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/os/posix/park_posix.cpp.i
+.PHONY : hotspot/os/posix/park_posix.cpp.i
+
+hotspot/os/posix/park_posix.s: hotspot/os/posix/park_posix.cpp.s
+.PHONY : hotspot/os/posix/park_posix.s
+
+# target to generate assembly for a file
+hotspot/os/posix/park_posix.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/os/posix/park_posix.cpp.s
+.PHONY : hotspot/os/posix/park_posix.cpp.s
+
 hotspot/runtime/BasicLock.o: hotspot/runtime/BasicLock.cpp.o
 .PHONY : hotspot/runtime/BasicLock.o
 
@@ -608,6 +632,30 @@ hotspot/runtime/JavaThread.s: hotspot/runtime/JavaThread.cpp.s
 hotspot/runtime/JavaThread.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/JavaThread.cpp.s
 .PHONY : hotspot/runtime/JavaThread.cpp.s
+
+hotspot/runtime/ObjectMonitor.o: hotspot/runtime/ObjectMonitor.cpp.o
+.PHONY : hotspot/runtime/ObjectMonitor.o
+
+# target to build an object file
+hotspot/runtime/ObjectMonitor.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/ObjectMonitor.cpp.o
+.PHONY : hotspot/runtime/ObjectMonitor.cpp.o
+
+hotspot/runtime/ObjectMonitor.i: hotspot/runtime/ObjectMonitor.cpp.i
+.PHONY : hotspot/runtime/ObjectMonitor.i
+
+# target to preprocess a source file
+hotspot/runtime/ObjectMonitor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/ObjectMonitor.cpp.i
+.PHONY : hotspot/runtime/ObjectMonitor.cpp.i
+
+hotspot/runtime/ObjectMonitor.s: hotspot/runtime/ObjectMonitor.cpp.s
+.PHONY : hotspot/runtime/ObjectMonitor.s
+
+# target to generate assembly for a file
+hotspot/runtime/ObjectMonitor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/hotspot/runtime/ObjectMonitor.cpp.s
+.PHONY : hotspot/runtime/ObjectMonitor.cpp.s
 
 hotspot/runtime/ObjectSynchronizer.o: hotspot/runtime/ObjectSynchronizer.cpp.o
 .PHONY : hotspot/runtime/ObjectSynchronizer.o
@@ -813,6 +861,9 @@ help:
 	@echo "... hotspot/os/posix/ThreadLocalStorage_posix.o"
 	@echo "... hotspot/os/posix/ThreadLocalStorage_posix.i"
 	@echo "... hotspot/os/posix/ThreadLocalStorage_posix.s"
+	@echo "... hotspot/os/posix/park_posix.o"
+	@echo "... hotspot/os/posix/park_posix.i"
+	@echo "... hotspot/os/posix/park_posix.s"
 	@echo "... hotspot/runtime/BasicLock.o"
 	@echo "... hotspot/runtime/BasicLock.i"
 	@echo "... hotspot/runtime/BasicLock.s"
@@ -822,6 +873,9 @@ help:
 	@echo "... hotspot/runtime/JavaThread.o"
 	@echo "... hotspot/runtime/JavaThread.i"
 	@echo "... hotspot/runtime/JavaThread.s"
+	@echo "... hotspot/runtime/ObjectMonitor.o"
+	@echo "... hotspot/runtime/ObjectMonitor.i"
+	@echo "... hotspot/runtime/ObjectMonitor.s"
 	@echo "... hotspot/runtime/ObjectSynchronizer.o"
 	@echo "... hotspot/runtime/ObjectSynchronizer.i"
 	@echo "... hotspot/runtime/ObjectSynchronizer.s"

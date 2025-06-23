@@ -30,8 +30,8 @@ public class MiniJVM implements Runnable {
         Thread thread1 = new Thread(new MiniJVM());
         Thread thread2 = new Thread(new MiniJVM());
         thread1.start();
-        thread2.start();
-        Thread.sleep(500000);
+        //thread2.start();
+        Thread.sleep(5000);
         Print.println(student.getAge());
     }
 

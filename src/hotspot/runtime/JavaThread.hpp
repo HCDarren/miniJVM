@@ -3,6 +3,7 @@
 
 #include <pthread.h>
 #include "runtime/StackFrame.hpp"
+#include "hotspot/os/posix/park_posix.hpp"
 
 namespace mini_jvm
 {
@@ -14,6 +15,7 @@ namespace mini_jvm
 
     class JavaThread
     {
+        friend class ObjectMonitor;
     public:
         JavaThread();
         ~JavaThread();
@@ -32,6 +34,11 @@ namespace mini_jvm
             return _interpreter;
         }
 
+        int64_t monitor_owner_id() {
+            int64_t id = _monitor_owner_id;
+            return id;
+        }
+
         bool is_lock_owned(address adr);
 
     private:
@@ -39,6 +46,8 @@ namespace mini_jvm
         JNIEnv* _jniEnv;
         pthread_t _tid;
         BytecodeInterpreter* _interpreter;
+        int64_t _monitor_owner_id;
+        PlatformEvent* _ParkEvent;
     };
 } // namespace name
 
