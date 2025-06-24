@@ -60,7 +60,6 @@ namespace mini_jvm
             jmethodID GetMethod(const jclass clazz, const std::string method_name, const std::string method_signature);
             void CallVoidMethod(const jobject jobj,const jmethodID mid);
             void CallStaticVoidMethod(jclass clazz, const jmethodID mid);
-
     };
 
     class JavaVM

@@ -9,6 +9,7 @@
 #include <cassert>
 #include "jni/Java_io_PrintStream.h"
 #include "jni/Java_lang_Thread.h"
+#include "jni/Java_lang_System.h"
 #include "cpu/aarch64/AssemblerAarch64.hpp"
 #include "runtime/JavaRunStack.hpp"
 #include "runtime/JavaThread.hpp"
@@ -43,6 +44,7 @@
 #define op_istore_3 62
 #define op_astore_1 76
 #define op_astore_2 77
+#define op_pop 87
 #define op_dup 89
 #define op_iadd 96
 #define op_imul 104
@@ -74,6 +76,7 @@ namespace mini_jvm
         // 注册 navtive 层的调用函数
         Java_io_PrintStream::register_natives(_jniEnv);
         Java_lang_Thread::register_natives(_jniEnv);
+        Java_lang_System::register_natives(_jniEnv);
     }
 
     void BytecodeInterpreter::invoke(const MethodInfo *method, InstanceKClass *kClass)
@@ -430,6 +433,11 @@ namespace mini_jvm
                 } else {
                     op += 2;
                 }
+                break;
+            }
+            case op_pop:
+            {
+                java_run_stack->top_frame()->pop_value_from_stack();
                 break;
             }
             case op_dup:

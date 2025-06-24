@@ -13,7 +13,7 @@ public class MiniJVM implements Runnable {
         }
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception{
         /*
         int a = 12;
         int b = 13;
@@ -31,11 +31,22 @@ public class MiniJVM implements Runnable {
         thread1.start();
         //thread2.start();
         Thread.sleep(5000);
-        Print.println(student.getAge());*/
+        Print.println(student.getAge());
         try{
             testException();
         } catch (NullPointerException e) {
             e.printStackTrace();
+        }
+        */
+        testGC();
+        System.gc();
+        Thread.sleep(5000);
+    }
+
+    public static void testGC() {
+        for(int i = 0; i < 10000; i++) {
+            Student student = new Student();
+            student.getAge();
         }
     }
 
