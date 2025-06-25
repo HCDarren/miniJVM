@@ -34,6 +34,9 @@ namespace mini_jvm
             return _interpreter;
         }
 
+        void park();
+        void unpark();
+
         bool is_lock_owned(address adr);
 
     private:

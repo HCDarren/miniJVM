@@ -1,5 +1,7 @@
 #include "jni/Java_lang_System.h"
 #include <iostream>
+#include "runtime/SafepointMechanism.hpp"
+#include "hotspot/gc/GC.hpp"
 
 namespace mini_jvm
 {
@@ -14,5 +16,6 @@ namespace mini_jvm
 
     JNIEXPORT void JNICALL Java_lang_System_gc(JNIEnv *env, jclass j_class) {
         std::cout << "System_gc: " << std::endl;
+        GC::gc();
     }
 } // namespace mini_jvm

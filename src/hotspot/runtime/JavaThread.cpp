@@ -29,6 +29,16 @@ namespace mini_jvm
         return (void *)adr == top_basicLock;
     }
 
+    void JavaThread::park()
+    {
+        _ParkEvent->park();
+    }
+
+    void JavaThread::unpark()
+    {
+        _ParkEvent->unpark();
+    }
+
     JavaThread::~JavaThread()
     {
         delete _run_java_statck;

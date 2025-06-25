@@ -60,7 +60,7 @@ namespace mini_jvm
         {
             return false;
         }
-        current->_ParkEvent->park();
+        current->park();
         return true;
     }
 

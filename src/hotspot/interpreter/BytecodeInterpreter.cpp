@@ -19,6 +19,7 @@
 #include "jni/jni.h"
 #include "runtime/ObjectSynchronizer.hpp"
 #include "runtime/BasicLock.hpp"
+#include "runtime/SafepointMechanism.hpp"
 
 #define op_iconst_0 3
 #define op_iconst_2 5
@@ -36,6 +37,7 @@
 #define op_aload_0 42
 #define op_aload_1 43
 #define op_aload_2 44
+#define op_aload_3 45
 #define op_istore 54
 #define op_astore 58
 #define op_istore_0 59
@@ -44,6 +46,7 @@
 #define op_istore_3 62
 #define op_astore_1 76
 #define op_astore_2 77
+#define op_astore_3 78
 #define op_pop 87
 #define op_dup 89
 #define op_iadd 96
@@ -100,6 +103,8 @@ namespace mini_jvm
         // 要把返回结果拷贝到调用者的栈中
         java_run_stack->pop_frame();
         delete frame;
+        // 安全点检测
+        SafepointMechanism::check();
     }
 
     // 执行方法，用解释器，模板机器码太复杂也不利于学习
@@ -133,6 +138,11 @@ namespace mini_jvm
                 java_run_stack->top_frame()->stack_store_to_local(2);
                 break;
             } 
+            case op_astore_3:
+            {
+                java_run_stack->top_frame()->stack_store_to_local(3);
+                break;
+            } 
             case op_aload:
             {
                 const u1 index = code[++op];
@@ -152,6 +162,11 @@ namespace mini_jvm
             case op_aload_2:
             {
                 java_run_stack->top_frame()->locals_load_to_stack(2);
+                break;
+            }
+            case op_aload_3:
+            {
+                java_run_stack->top_frame()->locals_load_to_stack(3);
                 break;
             }
             case op_invokespecial:

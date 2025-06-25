@@ -2,6 +2,7 @@
 #include <iostream>
 #include "oops/InstanceKClass.hpp"
 #include "classfile/ClassLoader.hpp"
+#include "runtime/JavaThread.hpp"
 
 namespace mini_jvm
 {
@@ -20,6 +21,7 @@ namespace mini_jvm
     }
 
     JNIEXPORT void JNICALL java_io_PrintStream_println_I(JNIEnv *env, jobject obj, jint j_int) {
-        std::cout << "printlnI: " <<j_int << std::endl;
+        JavaThread* current_thread = JavaThread::current();
+        std::cout << current_thread <<" printlnI: " <<j_int << std::endl;
     }
 } // namespace mini_jvm

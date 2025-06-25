@@ -5,11 +5,10 @@ public class MiniJVM implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i < 10000; i++) {
-            synchronized (student) {
-                int age = student.getAge();
-                age += 1;
-                student.setAge(age);
-            }
+            int age = student.getAge();
+            age += 1;
+            student.setAge(age);
+            student.printAge();
         }
     }
 
@@ -25,11 +24,6 @@ public class MiniJVM implements Runnable {
         stu.printAge();
         int age = stu.getAge();
         Print.println(age);
-
-        Thread thread1 = new Thread(new MiniJVM());
-        //Thread thread2 = new Thread(new MiniJVM());
-        thread1.start();
-        //thread2.start();
         Thread.sleep(5000);
         Print.println(student.getAge());
         try{
@@ -38,9 +32,17 @@ public class MiniJVM implements Runnable {
             e.printStackTrace();
         }
         */
+        Thread thread1 = new Thread(new MiniJVM());
+        Thread thread2 = new Thread(new MiniJVM());
+        thread1.start();
+        thread2.start();
+
         testGC();
+        Student student = new Student();
         System.gc();
-        Thread.sleep(5000);
+        student.setAge(100);
+        student.printAge();
+        Thread.sleep(100000);
     }
 
     public static void testGC() {

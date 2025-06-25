@@ -65,9 +65,14 @@ namespace mini_jvm
     class JavaVM
     {
         public:
+            JavaVM();
             JavaThread* current_thread();
             static JavaVM* current();
             void attachThread(JavaThread* java_thread);
+            void detachThread(JavaThread* java_thread);
+            std::map<pthread_t, JavaThread*> getAllThreads();
+        private:
+            std::map<pthread_t, JavaThread*> _thread_infos;
     };
 }
 #endif
