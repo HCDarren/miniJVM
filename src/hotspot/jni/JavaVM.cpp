@@ -42,8 +42,13 @@ namespace mini_jvm
         return javaVM;
     }
 
-    std::map<pthread_t, JavaThread*> JavaVM::getAllThreads() {
-        return _thread_infos;
+    std::set<JavaThread*> JavaVM::getAllThreads() {
+        std::set<JavaThread*> all_threads;
+        for (auto& it : _thread_infos)
+        {
+            all_threads.insert(it.second);
+        }
+        return all_threads;
     }
 
 }

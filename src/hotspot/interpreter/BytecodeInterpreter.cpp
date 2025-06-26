@@ -472,7 +472,6 @@ namespace mini_jvm
         InstanceKClass *newClass = ClassLoader::load_class(class_name);
         // new 指令触发类的初始化机制
         newClass->initialize();
-        // TODO: 在堆上开辟内存，我先不管，后面 GC 再说
         const Oop* obj = newClass->allocate_instance();
         java_run_stack->top_frame()->push_obj_to_stack(obj);
     }

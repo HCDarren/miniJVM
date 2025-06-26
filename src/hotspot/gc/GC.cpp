@@ -1,7 +1,11 @@
 #include "hotspot/gc/GC.hpp"
+#include "hotspot/gc/CollectedHeap.hpp"
 #include "runtime/SafepointMechanism.hpp"
 #include <iostream>
 #include <unistd.h>
+#include "runtime/JavaThread.hpp"
+#include "jni/jni.h"
+#include "runtime/JavaRunStack.hpp"
 
 namespace mini_jvm
 {
@@ -10,9 +14,27 @@ namespace mini_jvm
         SafepointMechanism::begin();
         // 回收垃圾
         std::cout << "stop the world-->" << std::endl;
-        usleep(5000000);
+        std::set<Oop*> all_roots = GC::findAllRoots();
+        std::cout << "all_roots size: " << all_roots.size() << std::endl;
+        // 所有根对象三色标记，最终找到所有需要存活的对象
+        CollectedHeap::clearOopsKeepAvaliable(all_roots);
         SafepointMechanism::end();
         return (void *)0; 
+    }
+
+    std::set<Oop*> GC::findAllRoots() {
+        // 找到所有根对象，那么需要遍历栈
+        std::set<JavaThread*> all_threads= JavaVM::current()->getAllThreads();
+        std::set<Oop*> all_gc_roots;
+        
+        for (JavaThread* java_thread : all_threads)
+        {
+           std::set<Oop*> java_statck_oops = java_thread->run_java_statck()->get_all_statck_oops();
+           all_gc_roots.insert(java_statck_oops.begin(), java_statck_oops.end());
+        }
+        // 还有什么方法区还是静态区？名字不重要，不能回收的也要去加进来，
+        // 知道就行我们不做，我们好像是放在 class 类对象里面了？
+        return all_gc_roots;
     }
 
     void GC::gc()

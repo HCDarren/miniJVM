@@ -7,6 +7,7 @@
 #include "utilities/GlobalDefinitions.hpp"
 #include <pthread.h>
 #include <map>
+#include <set>
 
 class _jobject
 {
@@ -70,7 +71,7 @@ namespace mini_jvm
             static JavaVM* current();
             void attachThread(JavaThread* java_thread);
             void detachThread(JavaThread* java_thread);
-            std::map<pthread_t, JavaThread*> getAllThreads();
+            std::set<JavaThread*> getAllThreads();
         private:
             std::map<pthread_t, JavaThread*> _thread_infos;
     };

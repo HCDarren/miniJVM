@@ -34,15 +34,16 @@ public class MiniJVM implements Runnable {
         */
         Thread thread1 = new Thread(new MiniJVM());
         Thread thread2 = new Thread(new MiniJVM());
-        thread1.start();
-        thread2.start();
+        //thread1.start();
+        //thread2.start();
 
         testGC();
         Student student = new Student();
         System.gc();
+        Thread.sleep(5000);
         student.setAge(100);
         student.printAge();
-        Thread.sleep(100000);
+        Thread.sleep(30000);
     }
 
     public static void testGC() {

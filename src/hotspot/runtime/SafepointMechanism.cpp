@@ -47,10 +47,10 @@ namespace mini_jvm
         sem_destroy(&_semaphore);
         enter_safe_point_thread_number.store(0);
         is_enter_safe_point.store(false);
-        std::map<pthread_t, JavaThread *> all_threads = JavaVM::current()->getAllThreads();
+        std::set<JavaThread*> all_threads = JavaVM::current()->getAllThreads();
         for (const auto &item : all_threads)
         { 
-            item.second->unpark();
+            item->unpark();
         }
     }
 

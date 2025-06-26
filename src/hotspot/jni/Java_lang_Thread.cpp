@@ -22,7 +22,7 @@ namespace mini_jvm
         jclass j_clazz = jniEnv->GetObjectClass(jobj);
         jmethodID j_mid = jniEnv->GetMethod(j_clazz, "run", "()V");
         jniEnv->CallVoidMethod(jobj, j_mid);
-
+        JavaVM::current()->detachThread(javaThread);
         delete javaThread;
         return (void *)0; // 返回值可被 pthread_join 获取
     }

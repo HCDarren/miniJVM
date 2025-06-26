@@ -4,6 +4,7 @@
 #include "runtime/JavaThread.hpp"
 #include "jni/jni.h"
 #include <assert.h>
+#include "hotspot/gc/CollectedHeap.hpp"
 
 namespace mini_jvm
 {
@@ -64,7 +65,7 @@ namespace mini_jvm
     Oop* InstanceKClass::allocate_instance() {
         size_t size = size_helper();
         // TODO 后面进行堆管理，等写 GC 的时候再说吧
-        Oop* new_oop = (Oop*)malloc(size);
+        Oop* new_oop = CollectedHeap::obj_allocate(size);
         memset(new_oop, 0, size); // 全部都设置为默认值 0
         new_oop->_make_word._value = MarkWord::unlocked_value;
         new_oop->_metadata = this;
